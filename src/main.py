@@ -1,9 +1,12 @@
 # main.py
+
 import sys
 from gui import *
 from converter import *
 
 
+# This function will either launch the GUI or operate as a CLI.
+# Functionality is determined by the number of command line arguments.
 def main():
     if len(sys.argv) < 2:
         print("In GUI")
