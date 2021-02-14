@@ -10,6 +10,7 @@ def main():
         start_gui()
     else:
         print(cli())
+        print("Command Line Arguments: " + str(sys.argv))
 
 
 if __name__ == "__main__":
