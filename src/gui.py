@@ -14,6 +14,9 @@ class app(tk.Tk):
         # Constructor for class Tk
         tk.Tk.__init__(self, *args, **kwargs)
 
+        # Set title of window
+        self.title("HAR - CSV to JSON")
+
         # Create a container
         container = tk.Frame(self, bg="white")
         tk.Tk.geometry(self, "500x500")
@@ -44,30 +47,32 @@ class LandingPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
+        # Configure the weight of the empty rows for spacing
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(3, weight=2)
+        self.grid_rowconfigure(5, weight=2)
+        self.grid_columnconfigure(0, weight=1)
+
         # Change background colour
         self.configure(bg="white")
 
         # Welcome Message
         greeting = ttk.Label(self, text="HAR - CSV to JSON", font=("Arial", 20, "bold"))
-        greeting.place(relx=0.5, anchor="center")
         greeting.config(background="white", foreground="black")
-        greeting.pack(padx=0, pady=(50, 0))
+        greeting.grid(row=1, column=0)
 
-        # Explanation
+        # Explanation Message
         info = ttk.Label(self, text="A CSV to JSON conversion tool for creating animations from HAR datasets",
                          font=("Arial", 9))
-        info.place(relx=0.5, anchor="center")
         info.config(background="white", foreground="gray")
-        info.pack(padx=0, pady=(50, 0))
+        info.grid(row=2, column=0)
 
         # Get Started Button
-        button_style = ttk.Style()
-        button_style.configure("B.TButton", font=("Arial", 12))
-
-        button = ttk.Button(self, text="Get Started", style="B.TButton", width=20,
+        get_started_button_style = ttk.Style()
+        get_started_button_style.configure("GetStarted.TButton", font=("Arial", 11))
+        button = ttk.Button(self, text="Get Started", style="GetStarted.TButton", width=20,
                             command=lambda: controller.show_frame(StartPage))
-        button.place(relx=0.5, anchor="center")
-        button.pack(padx=0, pady=(100, 0))
+        button.grid(row=4, column=0)
 
 
 class StartPage(tk.Frame):
