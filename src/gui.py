@@ -98,6 +98,7 @@ class ConfigurationPage(tk.Frame):
     def submit_file(self):
         global selected_format
         selected_format = self.format_var.get()
+        print(selected_format)
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -112,7 +113,8 @@ class ConfigurationPage(tk.Frame):
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
         self.grid_rowconfigure(3, weight=1)
-        self.grid_rowconfigure(5, weight=10)
+        self.grid_rowconfigure(5, weight=1)
+        self.grid_rowconfigure(6, weight=10)
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(5, weight=10)
@@ -153,85 +155,8 @@ class ConfigurationPage(tk.Frame):
         dropdown = ttk.OptionMenu(self, self.format_var, *format_options)
         dropdown.grid(row=4, column=2, sticky="EW", columnspan=3)
 
-
-class StartPage(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-
-        # label of frame Layout 2
-        label = ttk.Label(self, text="Startpage")
-
-        # putting the grid in its place by using
-        # grid
-        label.grid(row=0, column=4, padx=10, pady=10)
-
-        button1 = ttk.Button(self, text="Page 1",
-                             command=lambda: controller.show_frame(Page1))
-
-        # putting the button in its place by
-        # using grid
-        button1.grid(row=1, column=1, padx=10, pady=10)
-
-        ## button to show frame 2 with text layout2
-        button2 = ttk.Button(self, text="Page 2",
-                             command=lambda: controller.show_frame(Page2))
-
-        # putting the button in its place by
-        # using grid
-        button2.grid(row=2, column=1, padx=10, pady=10)
-
-
-# second window frame page1
-class Page1(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = ttk.Label(self, text="Page 1")
-        label.grid(row=0, column=4, padx=10, pady=10)
-
-        # button to show frame 2 with text
-        # layout2
-        button1 = ttk.Button(self, text="StartPage",
-                             command=lambda: controller.show_frame(StartPage))
-
-        # putting the button in its place
-        # by using grid
-        button1.grid(row=1, column=1, padx=10, pady=10)
-
-        # button to show frame 2 with text
-        # layout2
-        button2 = ttk.Button(self, text="Page 2",
-                             command=lambda: controller.show_frame(Page2))
-
-        # putting the button in its place by
-        # using grid
-        button2.grid(row=2, column=1, padx=10, pady=10)
-
-
-# third window frame page2
-class Page2(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = ttk.Label(self, text="Page 2")
-        label.grid(row=0, column=4, padx=10, pady=10)
-
-        # button to show frame 2 with text
-        # layout2
-        button1 = ttk.Button(self, text="Page 1",
-                             command=lambda: controller.show_frame(Page1))
-
-        # putting the button in its place by
-        # using grid
-        button1.grid(row=1, column=1, padx=10, pady=10)
-
-        # button to show frame 3 with text
-        # layout3
-        button2 = ttk.Button(self, text="Startpage",
-                             command=lambda: controller.show_frame(StartPage))
-
-        # putting the button in its place by
-        # using grid
-        button2.grid(row=2, column=1, padx=10, pady=10)
+        submit_button = ttk.Button(self, text="Submit for conversion", style="B.TButton", command=self.submit_file)
+        submit_button.grid(row=5, column=2, columnspan=3)
 
 
 # This function creates an instance of the app class and displays the GUI
