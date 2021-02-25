@@ -9,7 +9,7 @@ from converter import *
 
 
 # app class that displays the different pages of the GUI
-class app(tk.Tk):
+class App(tk.Tk):
 
     # Constructor for the app class
     def __init__(self, *args, **kwargs):
@@ -115,7 +115,7 @@ class ConfigurationPage(tk.Frame):
         self.grid_rowconfigure(3, weight=1)
         self.grid_rowconfigure(5, weight=1)
         self.grid_rowconfigure(6, weight=10)
-        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=3)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(5, weight=10)
 
@@ -161,5 +161,5 @@ class ConfigurationPage(tk.Frame):
 
 # This function creates an instance of the app class and displays the GUI
 def start_gui():
-    gui = app()
+    gui = App()
     gui.mainloop()
