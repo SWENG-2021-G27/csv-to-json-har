@@ -31,7 +31,7 @@ class app(tk.Tk):
         self.frames = {}
 
         # Fill the dictionary with the app pages
-        for F in (LandingPage, ConfigurationPage, StartPage, Page1, Page2):
+        for F in (LandingPage, ConfigurationPage):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
