@@ -3,6 +3,8 @@
 
 import tkinter as tk
 from tkinter import ttk
+from tkinter import filedialog
+from tkinter import StringVar
 from converter import *
 
 
@@ -29,7 +31,7 @@ class app(tk.Tk):
         self.frames = {}
 
         # Fill the dictionary with the app pages
-        for F in (LandingPage, StartPage, Page1, Page2):
+        for F in (LandingPage, ConfigurationPage, StartPage, Page1, Page2):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -71,8 +73,85 @@ class LandingPage(tk.Frame):
         get_started_button_style = ttk.Style()
         get_started_button_style.configure("GetStarted.TButton", font=("Arial", 11))
         button = ttk.Button(self, text="Get Started", style="GetStarted.TButton", width=20,
-                            command=lambda: controller.show_frame(StartPage))
+                            command=lambda: controller.show_frame(ConfigurationPage))
         button.grid(row=4, column=0)
+
+
+selected_file = ""
+selected_format = ""
+format_options = [
+    "Please Select a Dataset",
+    "One",
+    "Two",
+    "Three"
+]
+
+
+# The Conversion Configuration Page
+class ConfigurationPage(tk.Frame):
+    def select_file(self):
+        global selected_file
+        selected_file = filedialog.askopenfilename()
+        to_display = selected_file[0:50] + "..."
+        self.file_var.set(to_display)
+
+    def submit_file(self):
+        global selected_format
+        selected_format = self.format_var.get()
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        # Variables to store what the user has selected
+        self.file_var = StringVar()
+        self.file_var.set(selected_file)
+        self.format_var = StringVar()
+        self.format_var.set(format_options[0])
+
+        # Configure the weight of the rows and columns for spacing
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(1, weight=1)
+        self.grid_rowconfigure(3, weight=1)
+        self.grid_rowconfigure(5, weight=10)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(5, weight=10)
+
+        # Change background colour
+        self.configure(bg="white")
+
+        # Create List Labels
+        list_one = ttk.Label(self, text="1", font=("Arial", 20, "bold"))
+        list_one.config(background="white", foreground="#40c3f7")
+        list_one.grid(row=1, column=1, sticky="W")
+        list_two = ttk.Label(self, text="2", font=("Arial", 20, "bold"))
+        list_two.config(background="white", foreground="#40c3f7")
+        list_two.grid(row=3, column=1, sticky="W")
+
+        # List Messages
+        upload_file_message = ttk.Label(self, text="Upload File:", font=("Arial", 20, "bold"))
+        upload_file_message.config(background="white", foreground="black")
+        upload_file_message.grid(row=1, column=2, sticky="W")
+
+        file = ttk.Label(self, textvariable=self.file_var, font=("Arial", 9))
+        file.config(background="white", foreground="black")
+        file.grid(row=2, column=2, sticky="W", columnspan=3)
+
+        select_format_message = ttk.Label(self, text="Select format:", font=("Arial", 20, "bold"))
+        select_format_message.config(background="white", foreground="black")
+        select_format_message.grid(row=3, column=2, sticky="W")
+
+        # Buttons and Dropdowns
+        button_style = ttk.Style()
+        button_style.configure("B.TButton", font=("Arial", 9))
+        upload_file_button = ttk.Button(self, text="Browse Files...", style="B.TButton", width=15,
+                                        command=self.select_file)
+        upload_file_button.grid(row=1, column=3, sticky="W")
+
+        dropdown_style = ttk.Style()
+        dropdown_style.configure("TMenubutton", font=("Arial", 9))
+        dropdown = ttk.OptionMenu(self, self.format_var, *format_options)
+        dropdown.grid(row=4, column=2, sticky="EW", columnspan=3)
 
 
 class StartPage(tk.Frame):
