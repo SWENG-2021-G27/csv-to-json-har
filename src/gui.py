@@ -31,7 +31,7 @@ class App(tk.Tk):
         self.frames = {}
 
         # Fill the dictionary with the app pages
-        for F in (LandingPage, ConfigurationPage):
+        for F in (LandingPage, ConfigurationPage, ConclusionPage):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -42,6 +42,11 @@ class App(tk.Tk):
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+
+    def submit_file_and_change_frame(self, cont, file_format, file):
+        self.show_frame(cont)
+        print(file_format)
+        print(file)
 
 
 # The Landing Page
@@ -77,8 +82,6 @@ class LandingPage(tk.Frame):
         button.grid(row=4, column=0)
 
 
-selected_file = ""
-selected_format = ""
 format_options = [
     "Please Select a Dataset",
     "One",
@@ -90,22 +93,17 @@ format_options = [
 # The Conversion Configuration Page
 class ConfigurationPage(tk.Frame):
     def select_file(self):
-        global selected_file
-        selected_file = filedialog.askopenfilename()
-        to_display = selected_file[0:50] + "..."
-        self.file_var.set(to_display)
-
-    def submit_file(self):
-        global selected_format
-        selected_format = self.format_var.get()
-        print(selected_format)
+        self.file_var.set(filedialog.askopenfilename())
+        self.file_name_to_display.set(self.file_var.get()[0:50] + "...")
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
         # Variables to store what the user has selected
         self.file_var = StringVar()
-        self.file_var.set(selected_file)
+        self.file_var.set("")
+        self.file_name_to_display = StringVar()
+        self.file_name_to_display.set("")
         self.format_var = StringVar()
         self.format_var.set(format_options[0])
 
@@ -135,7 +133,7 @@ class ConfigurationPage(tk.Frame):
         upload_file_message.config(background="white", foreground="black")
         upload_file_message.grid(row=1, column=2, sticky="W")
 
-        file = ttk.Label(self, textvariable=self.file_var, font=("Arial", 9))
+        file = ttk.Label(self, textvariable=self.file_name_to_display, font=("Arial", 9))
         file.config(background="white", foreground="black")
         file.grid(row=2, column=2, sticky="W", columnspan=3)
 
@@ -155,8 +153,25 @@ class ConfigurationPage(tk.Frame):
         dropdown = ttk.OptionMenu(self, self.format_var, *format_options)
         dropdown.grid(row=4, column=2, sticky="EW", columnspan=3)
 
-        submit_button = ttk.Button(self, text="Submit for conversion", style="B.TButton", command=self.submit_file)
+        submit_button = ttk.Button(self, text="Submit for conversion", style="B.TButton",
+                                   command=lambda: controller.submit_file_and_change_frame(ConclusionPage,
+                                                                                           self.format_var.get(),
+                                                                                           self.file_var.get()))
         submit_button.grid(row=5, column=2, columnspan=3)
+
+
+# The Conclusion Page
+class ConclusionPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        # Change background colour
+        self.configure(bg="white")
+
+        # Create Labels
+        message = ttk.Label(self, text="Hello World!", font=("Arial", 20, "bold"))
+        message.config(background="white", foreground="#40c3f7")
+        message.grid(row=1, column=1, sticky="W")
 
 
 # This function creates an instance of the app class and displays the GUI
