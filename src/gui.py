@@ -64,7 +64,8 @@ class LandingPage(tk.Frame):
         self.configure(bg="white")
 
         # Welcome Message
-        greeting = ttk.Label(self, text="HAR - CSV to JSON", font=("Arial", 20, "bold"))
+        greeting = ttk.Label(self, text="HAR - CSV to JSON",
+                             font=("Arial", 20, "bold"))
         greeting.config(background="white", foreground="black")
         greeting.grid(row=1, column=0)
 
@@ -76,7 +77,8 @@ class LandingPage(tk.Frame):
 
         # Get Started Button
         get_started_button_style = ttk.Style()
-        get_started_button_style.configure("GetStarted.TButton", font=("Arial", 11))
+        get_started_button_style.configure(
+            "GetStarted.TButton", font=("Arial", 11))
         button = ttk.Button(self, text="Get Started", style="GetStarted.TButton", width=20,
                             command=lambda: controller.show_frame(ConfigurationPage))
         button.grid(row=4, column=0)
@@ -129,15 +131,18 @@ class ConfigurationPage(tk.Frame):
         list_two.grid(row=3, column=1, sticky="W")
 
         # List Messages
-        upload_file_message = ttk.Label(self, text="Upload File:", font=("Arial", 20, "bold"))
+        upload_file_message = ttk.Label(
+            self, text="Upload File:", font=("Arial", 20, "bold"))
         upload_file_message.config(background="white", foreground="black")
         upload_file_message.grid(row=1, column=2, sticky="W")
 
-        file = ttk.Label(self, textvariable=self.file_name_to_display, font=("Arial", 9))
+        file = ttk.Label(
+            self, textvariable=self.file_name_to_display, font=("Arial", 9))
         file.config(background="white", foreground="black")
         file.grid(row=2, column=2, sticky="W", columnspan=3)
 
-        select_format_message = ttk.Label(self, text="Select format:", font=("Arial", 20, "bold"))
+        select_format_message = ttk.Label(
+            self, text="Select format:", font=("Arial", 20, "bold"))
         select_format_message.config(background="white", foreground="black")
         select_format_message.grid(row=3, column=2, sticky="W")
 
@@ -168,13 +173,31 @@ class ConclusionPage(tk.Frame):
         # Change background colour
         self.configure(bg="white")
 
+        # Configure the weight of the empty rows for spacing
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(3, weight=2)
+        self.grid_rowconfigure(5, weight=2)
+        self.grid_columnconfigure(0, weight=1)
+
         # Create Labels
-        message = ttk.Label(self, text="Hello World!", font=("Arial", 20, "bold"))
-        message.config(background="white", foreground="#40c3f7")
-        message.grid(row=1, column=1, sticky="W")
+        farewell = ttk.Label(self, text="Successfully converted file!",
+                             font=("Arial", 20, "bold"))
+        farewell.config(background="white", foreground="black")
+        farewell.grid(row=0, column=0)
+
+        # Buttons and Dropdowns
+        button_style = ttk.Style()
+        button_style.configure("B.TButton", font=("Arial", 9))
+        return_to_main_page = ttk.Button(self, text="Return to conversion page", style="B.TButton",
+                                         width=30, command=lambda: controller.show_frame(ConfigurationPage))
+        return_to_main_page.grid(row=2, column=0)
 
 
 # This function creates an instance of the app class and displays the GUI
 def start_gui():
     gui = App()
+    # created an app icon
+    gui.tk.call('wm', 'iconphoto', gui._w, tk.PhotoImage(file='GUIicon.png'))
+    # added to keep all text on screen at all times
+    gui.resizable(False, False)
     gui.mainloop()
