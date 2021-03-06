@@ -162,7 +162,7 @@ class ConfigurationPage(tk.Frame):
 
 # The Conclusion Page
 class ConclusionPage(tk.Frame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent):
         tk.Frame.__init__(self, parent)
 
         # Change background colour
