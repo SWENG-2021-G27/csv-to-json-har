@@ -167,6 +167,11 @@ class ConfigurationPage(tk.Frame):
 
 # The Conclusion Page
 class ConclusionPage(tk.Frame):
+
+    def download_file(self):
+        self.file_var.set(filedialog.asksaveasfile(
+            initialdir="/", title="Save file",))
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -180,17 +185,23 @@ class ConclusionPage(tk.Frame):
         self.grid_columnconfigure(0, weight=1)
 
         # Create Labels
-        farewell = ttk.Label(self, text="Successfully converted file!",
+        farewell = ttk.Label(self, text="All done!",
                              font=("Arial", 20, "bold"))
         farewell.config(background="white", foreground="black")
-        farewell.grid(row=0, column=0)
+        farewell.grid(row=1, column=0)
 
         # Buttons and Dropdowns
         button_style = ttk.Style()
         button_style.configure("B.TButton", font=("Arial", 9))
+        return_to_main_page = ttk.Button(self, text="Download File", style="B.TButton",
+                                         width=30, command=lambda: self.download_file)
+        return_to_main_page.grid(row=2, column=0)
+
+        button_style = ttk.Style()
+        button_style.configure("B.TButton", font=("Arial", 9))
         return_to_main_page = ttk.Button(self, text="Return to conversion page", style="B.TButton",
                                          width=30, command=lambda: controller.show_frame(ConfigurationPage))
-        return_to_main_page.grid(row=2, column=0)
+        return_to_main_page.grid(row=5, column=0)
 
 
 # This function creates an instance of the app class and displays the GUI
