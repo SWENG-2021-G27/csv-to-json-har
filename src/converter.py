@@ -78,11 +78,12 @@ joints1 = pkummd_read_joints_from_line(f.readline())
 joints_json = '\\"j\\": ['
 count = 0
 for json_tuple in  map(array_of_ascii_floats_to_json_tuple, joints1):
-   joints_json += '{\\"s\\"\\2,\"p\\":\\"(0.809, 19.154, 269.086)\\",\\"q\\":\\"(0.5, 0.4)\\",\\"o\\":\\"(0.000, 0.000, 0.000, 0.000)\\"},{\\"s\\":2,\\"p\\":\\"' + json_tuple + '\\",\\"q\\":\\"(0, 0)\\",\\"o\\":\\"(0, 0, 0, 0)\\"},'
+   joints_json += '{\\"s\\":2,\\"p\\":\\"(0.809, 19.154, 269.086)\\",\\"q\\":\\"(0.5, 0.4)\\",\\"o\\":\\"(0.000, 0.000, 0.000, 0.000)\\"},{\\"s\\":2,\\"p\\":\\"' + json_tuple + '\\",\\"q\\":\\"(0, 0)\\",\\"o\\":\\"(0, 0, 0, 0)\\"}'
    count += 1
-   if (count == 15):
+   if (count == 19):
       break
+   joints_json += ',\n'
 
-joints_json += "\b" + "]"
+joints_json +=  "]"
 print( joints_json )
 
