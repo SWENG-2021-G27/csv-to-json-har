@@ -10,7 +10,7 @@ configuration = {
 
 
 def load_config(path_to_config, encoding="utf-8"):
-  print("Loading configuration from: " + path_to_config)
+  print("\033[0;37;40mLoading configuration from: " + path_to_config)
   f = open(path_to_config, "r", encoding=encoding)
   
   line = f.readline()
@@ -27,7 +27,8 @@ def load_config(path_to_config, encoding="utf-8"):
       print( key + " is a valid configuration variable")
       configuration[key] = line[len(key):len(line)-1]
       print( "configuration[" + key + "] has been updated to " + configuration[key])
-      
+    else :
+      print("\033[1;31;44mERROR " + key + " is not a recognised configuration variable\033[0;37;40m")      
     print(line[:len(line)-1] + " \u2713",)
     line = f.readline()
   f.close()
