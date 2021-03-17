@@ -9,13 +9,12 @@ import sys
 # This function will either launch the GUI or operate as a CLI.
 # Functionality is determined by the number of command line arguments.
 def main():
-    if len(sys.argv) < 2:
-        print("In GUI")
+    if len(sys.argv) < 4:
         start_gui()
     else:
         x = Configuration(sys.argv[1])
         if x.config["Structure"] == "Vertical":
-            convert_vertical(sys.argv[2], x, sys.argv[3])
+            convert_vertical(sys.argv[3], sys.argv[2], x)
         else:
             print("Error")
 

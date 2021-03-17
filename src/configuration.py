@@ -8,6 +8,7 @@ class Configuration:
     config = {
         "Device": 3,  # Default to 3 for other (not kinect) device
         "Ground": (0, 1, 0, 0.6),  # Default to (0, 1, 0 , 0.6) for ground
+        "Offset": 0,
         "NumberOfSkeletons": 1,  # Default to one skeleton per file
         "NumberOfJoints": 19,  # Default to 19 joints per file (19 joints in the JSON output)
         "Structure": "Vertical",  # Default to joint positions going down
@@ -136,6 +137,9 @@ class Configuration:
 
         if "StartRow" in data:
             self.config["StartRow"] = data["StartRow"]
+
+        if "Offset" in data:
+            self.config["Offset"] = data["Offset"]
 
         if "Frames" in data:
             if data["Frames"]["FramesInfo"]:

@@ -9,11 +9,76 @@ def cli():
     return "In CLI"
 
 
+joint_order = ["Head",
+               "Neck",
+               "LeftShoulder",
+               "RightShoulder",
+               "LeftElbow",
+               "RightElbow",
+               "LeftWrist",
+               "RightWrist",
+               "LeftHand",
+               "RightHand",
+               "TopSpine",
+               "MidSpine",
+               "BaseSpine",
+               "LeftHip",
+               "RightHip",
+               "LeftKnee",
+               "RightKnee",
+               "LeftFoot",
+               "RightFoot"]
+
+
 # A function which converts a vertically aligned csv to the strict json required
-def convert_vertical(filename, c, output):
+def convert_vertical(filename, output, c):
+    # Open the output file in write mode and write the header fields of the json
+    out = open(output, "w")
+    out.write("{\"d\":" + str(c.config["Device"]) + ","
+              + "\"g\":" + str(c.config["Ground"]) + ","
+              + "\"o\":" + str(c.config["Offset"]) + ","
+              + "\"t\":{\"Items\":[")
+
+    # Read every row of the csv and process the data accordingly
     with open(filename) as f:
         row_idx = 0
+        frame = 0
         for row in csv.reader(f):
             if row_idx > c.config["StartRow"]:
-                print(row[0])
+
+                # Write the frame field
+                if frame > 0:
+                    out.write(",")
+                out.write("{\"f\":")
+                if c.config["Frames"]["FramesInfo"]:
+                    out.write(str(row[c.config["Frames"]["FrameIdx"]]))
+                else:
+                    out.write(str(frame * 33))
+                out.write(",")
+
+                # Write the joint information appropriately
+                out.write("\"b\":{\"i\":" + str(frame + 1) + ",")
+                out.write("\"j\":[")
+
+                for joint in joint_order:
+                    out.write("{\"s\":2,")
+                    out.write("\"p\":" + str([c.config["Joints"][joint]["x"], c.config["Joints"][joint]["y"],
+                                              c.config["Joints"][joint]["z"]]) + ",")
+                    out.write("\"q\":[0,0],")
+                    out.write("\"o\":[0,0,0,0]}")
+                    if joint != joint_order[len(joint_order) - 1]:
+                        out.write(",")
+
+                out.write("],")
+                out.write("\"r\":0,")
+                out.write("\"l\":0,")
+                out.write("\"_negativeGroundOffset\":0.0,")
+                out.write("\"_previousNegativeGroundOffset\":0.0")
+                out.write("}")
+
+                frame = frame + 1
+                out.write("}")
+
             row_idx = row_idx + 1
+
+        out.write("]}}")
