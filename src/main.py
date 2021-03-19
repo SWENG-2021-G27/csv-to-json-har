@@ -1,19 +1,22 @@
 # main.py
 
-import sys
 from gui import *
 from converter import *
+from configuration import *
+import sys
 
 
 # This function will either launch the GUI or operate as a CLI.
 # Functionality is determined by the number of command line arguments.
 def main():
-    if len(sys.argv) < 2:
-        print("In GUI")
+    if len(sys.argv) < 4:
         start_gui()
     else:
-        print(cli())
-        print("Command Line Arguments: " + str(sys.argv))
+        x = Configuration(sys.argv[1])
+        if x.config["Structure"] == "Vertical":
+            convert_vertical(sys.argv[3], sys.argv[2], x)
+        else:
+            print("Error")
 
 
 if __name__ == "__main__":

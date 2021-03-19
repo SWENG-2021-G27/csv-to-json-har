@@ -1,13 +1,7 @@
 # converter.py
 # This file will contain the source code for converting csv files to json
-import json
-import os
 
-
-# A function that returns "Hello World". This function is called in start_gui() in gui.py.
-# Change what is returned in this function to edit what is displayed in the "Hello World" GUI.
-def hello_world():
-    return "Hello World"
+import csv
 
 
 # A function that returns "In CLI". This function is called in main.py to signify that the GUI has not been started.
@@ -15,31 +9,74 @@ def cli():
     return "In CLI"
 
 
-# A function which writes the contents of a Python dictionary to a JSON file
-def dict_to_json(json_path, dictionary):
-    # Check if path is a directory
-    is_directory = os.path.isdir(json_path)
-    if is_directory:
-        json_path = json_path + "\\data.json"
+joint_order = ["Head",
+               "Neck",
+               "LeftShoulder",
+               "RightShoulder",
+               "LeftElbow",
+               "RightElbow",
+               "LeftWrist",
+               "RightWrist",
+               "LeftHand",
+               "RightHand",
+               "TopSpine",
+               "MidSpine",
+               "BaseSpine",
+               "LeftHip",
+               "RightHip",
+               "LeftKnee",
+               "RightKnee",
+               "LeftFoot",
+               "RightFoot"]
 
-    # Ensure we are not overwriting an existing file
-    if os.path.exists(json_path):
-        i = 1
-        found = False
-        while not found:
-            old_path = json_path.rsplit(".", 1)
-            new_path = old_path[0] + "(" + str(i) + ")." + old_path[1]
-            if not os.path.exists(new_path):
-                found = True
-                json_path = new_path
-            i = i + 1
 
-    # Write the file if the path is correct
-    try:
-        with open(json_path, "w") as outfile:
-            json.dump(dictionary, outfile)
-    except:
-        return "Error: Output path incorrect"
+# A function which converts a vertically aligned csv to the strict json required
+def convert_vertical(filename, output, c):
+    # Open the output file in write mode and write the header fields of the json
+    out = open(output, "w")
+    out.write("{\"d\":" + str(c.config["Device"]) + ","
+              + "\"g\":\"(" + str(c.config["Ground"][0]) + "," + str(c.config["Ground"][1]) + "," + str(
+        c.config["Ground"][2]) + "," + str(c.config["Ground"][3]) + ")\","
+              + "\"o\":\"" + str(c.config["Offset"]) + "\","
+              + "\"t\":\"{\\\"Items\\\":[")
 
-    return ""  # No error to return
+    # Read every row of the csv and process the data accordingly
+    with open(filename) as f:
+        row_idx = 0
+        frame = 0
+        for row in csv.reader(f):
+            if row_idx > c.config["StartRow"]:
+                # Write the frame field
+                if frame > 0:
+                    out.write(",")
+                out.write("{\\\"f\\\":")
+                out.write(str((frame + 1) * 33))
+                out.write(",")
 
+                # Write the joint information appropriately
+                out.write("\\\"b\\\":{\\\"i\\\":" + str(frame + 1) + ",")
+                out.write("\\\"j\\\":[")
+
+                for joint in joint_order:
+                    out.write("{\\\"s\\\":2,")
+                    out.write("\\\"p\\\":\\\"(" + str(row[c.config["Joints"][joint]["x"]]).strip() + ","
+                              + str(row[c.config["Joints"][joint]["y"]]).strip() + ","
+                              + str(float(row[c.config["Joints"][joint]["z"]])+200).strip() + ")\\\",")
+                    out.write("\\\"q\\\":\\\"(0,0)\\\",")
+                    out.write("\\\"o\\\":\\\"(0,0,0,0)\\\"}")
+                    if joint != joint_order[len(joint_order) - 1]:
+                        out.write(",")
+
+                out.write("],")
+                out.write("\\\"r\\\":0,")
+                out.write("\\\"l\\\":0,")
+                out.write("\\\"_negativeGroundOffset\\\":0.0,")
+                out.write("\\\"_previousNegativeGroundOffset\\\":0.0")
+                out.write("}")
+
+                frame = frame + 1
+                out.write("}")
+
+            row_idx = row_idx + 1
+
+        out.write("]}\"}")
