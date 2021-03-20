@@ -131,3 +131,6 @@ dmypy.json
 
 # datasets
 **gitignore
+
+# vim
+**/Session.vim
