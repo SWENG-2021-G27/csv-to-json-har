@@ -16,7 +16,7 @@ def main():
         input_file = sys.argv[2]
         output_file = sys.argv[3]
         if x.config["Structure"] == "Vertical":
-            convert_vertical(input_file, outputfile, x)
+            convert_vertical(input_file, output_file, x)
         else:
             print("Error")
 
