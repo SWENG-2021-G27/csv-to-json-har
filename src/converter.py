@@ -50,7 +50,18 @@ def convert_vertical(filename, output, c):
                 if frame > 0:
                     out.write(",")
                 out.write("{\\\"f\\\":")
-                out.write(str((frame + 1) * 33))
+
+                if c.config["Frames"]["FramesInfo"]:
+                    time = row[c.config["Frames"]["FrameIdx"]]
+                    if frame >= int(float(time) * 33):
+                        frame = frame + 1
+                    else:
+                        frame = int(float(time) * 33)
+                    out.write(str(frame))
+                else:
+                    out.write(str((frame + 1) * 33))
+                    frame = frame + 1
+
                 out.write(",")
 
                 # Write the joint information appropriately
@@ -58,10 +69,13 @@ def convert_vertical(filename, output, c):
                 out.write("\\\"j\\\":[")
 
                 for joint in joint_order:
-                    out.write("{\\\"s\\\":2,")
-                    out.write("\\\"p\\\":\\\"(" + str(row[c.config["Joints"][joint]["x"]]).strip() + ","
-                              + str(row[c.config["Joints"][joint]["y"]]).strip() + ","
-                              + str(float(row[c.config["Joints"][joint]["z"]])+200).strip() + ")\\\",")
+                    out.write("{\\\"s\\\":" + str(c.config["Joints"][joint]["status"]).strip() + ",")
+                    out.write("\\\"p\\\":\\\"(" + str(
+                        float(row[c.config["Joints"][joint]["x"]]) + float(c.config["x-offset"])).strip() + ","
+                              + str(
+                        float(row[c.config["Joints"][joint]["y"]]) + float(c.config["y-offset"])).strip() + ","
+                              + str(
+                        float(row[c.config["Joints"][joint]["z"]]) + float(c.config["z-offset"])).strip() + ")\\\",")
                     out.write("\\\"q\\\":\\\"(0,0)\\\",")
                     out.write("\\\"o\\\":\\\"(0,0,0,0)\\\"}")
                     if joint != joint_order[len(joint_order) - 1]:
@@ -73,8 +87,6 @@ def convert_vertical(filename, output, c):
                 out.write("\\\"_negativeGroundOffset\\\":0.0,")
                 out.write("\\\"_previousNegativeGroundOffset\\\":0.0")
                 out.write("}")
-
-                frame = frame + 1
                 out.write("}")
 
             row_idx = row_idx + 1
