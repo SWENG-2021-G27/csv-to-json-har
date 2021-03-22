@@ -12,6 +12,7 @@ class Configuration:
         "NumberOfSkeletons": 1,  # Default to one skeleton per file
         "NumberOfJoints": 19,  # Default to 19 joints per file (19 joints in the JSON output)
         "Structure": "Vertical",  # Default to joint positions going down
+        "ColumnSeperator": "Comma",
         "StartRow": 0,
         "Frames": {
             "FramesInfo": False,  # Flag to say if there is timing data in the file
@@ -156,6 +157,9 @@ class Configuration:
 
         if "Structure" in data:
             self.config["Structure"] = data["Structure"]
+
+        if "ColumnSeperator" in data:
+            self.config["ColumnSeperator"] = data["ColumnSeperator"]
 
         if "StartRow" in data:
             self.config["StartRow"] = data["StartRow"]
