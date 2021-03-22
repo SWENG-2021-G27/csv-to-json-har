@@ -1,0 +1,1 @@
+wine /home/neimhin/Unity/RobotAnimationCreator/ConvertJsonToImages.exe -i /home/neimhin/sweng-g27/csv-to-json-har/RobotAnimationCreator/permutations -o /home/neimhin/sweng-g27/csv-to-json-har/RobotAnimationCreator/per_out -d 0
