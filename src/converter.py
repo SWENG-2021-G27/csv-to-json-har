@@ -34,7 +34,6 @@ joint_order = ["Head",
 # A function which converts a vertically aligned csv to the strict json required
 def convert_vertical(filename, output, c):
     # Open the output file in write mode and write the header fields of the json
-    print("Writing json to " + os.path.abspath(output))
     out = open(output, "w")
     out.write("{\"d\":" + str(c.config["Device"]) + ","
               + "\"g\":\"(" + str(c.config["Ground"][0]) + "," + str(c.config["Ground"][1]) + "," + str(
@@ -44,20 +43,16 @@ def convert_vertical(filename, output, c):
     
     if(c.config["ColumnSeperator"] == "Spaces"):
       # Read file with space seperated columns
-      print("Reading raw data from " + os.path.abspath(filename))
       with open(os.path.abspath(filename), "r") as f:
         row_idx = 0
         frame = 0
 
         line = f.readline()
         for line in f:
-          print("DEBUG line: " + line)
           if row_idx >= c.config["StartRow"]:
                   # TODO this implementation is only handling the first skeleton in pkummd and throwing out the second
                   row = line.split()
                   
-                  #DEBUG
-                  print("DEBUG: \nrow length: " + str(len(row)) + "\nrow content: " + str(row))
                   # Write the frame field
                   if frame > 0:
                       out.write(",")
