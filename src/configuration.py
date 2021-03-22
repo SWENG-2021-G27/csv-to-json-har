@@ -18,101 +18,123 @@ class Configuration:
             "FramesInfo": False,  # Flag to say if there is timing data in the file
             "FrameIdx": -1  # If there is timing data in the file, it is in this column
         },
+        "x-offset": 0,
+        "y-offset": 0,
+        "z-offset": 0,
         "Joints": {  # These are the order of the joints in the file
             "Head": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "Neck": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "LeftShoulder": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "RightShoulder": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "LeftElbow": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "RightElbow": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "LeftWrist": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "RightWrist": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "LeftHand": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "RightHand": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "TopSpine": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "MidSpine": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "BaseSpine": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "LeftHip": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "RightHip": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "LeftKnee": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "RightKnee": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "LeftFoot": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
             "RightFoot": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
+                "status": 0
             },
         }
     }
@@ -149,5 +171,14 @@ class Configuration:
             if data["Frames"]["FramesInfo"]:
                 self.config["Frames"]["FramesInfo"] = True
                 self.config["Frames"]["FrameIdx"] = data["Frames"]["FrameIdx"]
+
+        if "x-offset" in data:
+            self.config["x-offset"] = data["x-offset"]
+
+        if "y-offset" in data:
+            self.config["y-offset"] = data["y-offset"]
+
+        if "z-offset" in data:
+            self.config["z-offset"] = data["z-offset"]
 
         self.config["Joints"] = data["Joints"]
