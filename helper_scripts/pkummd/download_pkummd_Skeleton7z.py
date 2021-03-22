@@ -4,25 +4,6 @@ import os
 import sys
 from tqdm import tqdm
 
-import logging
-
-# Enabling debugging at http.client level (requests->urllib3->http.client)
-# you will see the REQUEST, including HEADERS and DATA, and RESPONSE with HEADERS but without DATA.
-# the only thing missing will be the response.body which is not logged.
-try: # for Python 3
-    from http.client import HTTPConnection
-except ImportError:
-    from httplib import HTTPConnection
-HTTPConnection.debuglevel = 1
-
-logging.basicConfig() # you need to initialize logging, otherwise you will not see anything from requests
-logging.getLogger().setLevel(logging.DEBUG)
-requests_log = logging.getLogger("urllib3")
-requests_log.setLevel(logging.DEBUG)
-requests_log.propagate = True
-
-
-
 def download_file_from_google_drive(id, destination):
     URL = "https://docs.google.com/uc?export=download"
     
@@ -69,5 +50,7 @@ def save_response_content(response, destination):
 
 
 file_id = '0B20a4UzO-OyMQW9wVHhlVmZBR0k'
-destination = os.path.abspath('gitignore') + os.path.sep + 'Skeleton.7z'
+sep = os.path.sep
+destination = os.path.abspath('..' + sep + '..' + sep + 'RawDatasets' + sep + 'PKUMMD' ) + 'Skeleton.7z'
+print('Downloading PKUMMD zip to ' + destination)
 download_file_from_google_drive(file_id, destination)
