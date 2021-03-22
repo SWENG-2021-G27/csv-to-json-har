@@ -13,9 +13,10 @@ def main():
         start_gui()
     else:
         x = Configuration(sys.argv[1])
+        input_file = sys.argv[2]
+        output_file = sys.argv[3]
         if x.config["Structure"] == "Vertical":
-            #                input        output
-            convert_vertical(sys.argv[2], sys.argv[3], x)
+            convert_vertical(input_file, output_file, x)
         else:
             print("Error")
 
