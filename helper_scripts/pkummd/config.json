@@ -1,10 +1,6 @@
 {
   "Device": 3,
-<<<<<<< HEAD:pkummd/config.json
-  "Ground": [0, 1, 0, 0],
-=======
   "Ground": [0, 1, 0, 0.6],
->>>>>>> main:sample_datasets/pkummd/config.json
   "Offset": 0,
   "NumberOfSkeletons": 2,
   "NumberOfJoints": 25,
