@@ -18,3 +18,4 @@ if(not os.path.isdir(target_folder)):
 print('Extracting ' + target + '\nThis may take a while...')
 with zipfile.ZipFile(target, 'r') as zip_ref:
   zip_ref.extractall(target_folder)
+print('Finished')
