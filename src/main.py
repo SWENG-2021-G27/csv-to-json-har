@@ -14,7 +14,8 @@ def main():
     else:
         x = Configuration(sys.argv[1])
         if x.config["Structure"] == "Vertical":
-            convert_vertical(sys.argv[3], sys.argv[2], x)
+            #                input        output
+            convert_vertical(sys.argv[2], sys.argv[3], x)
         else:
             print("Error")
 
