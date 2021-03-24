@@ -45,6 +45,13 @@ def convert_vertical(filename, output, c):
         row_idx = 0
         frame = 0
         for row in csv.reader(f):
+            if row_idx <= c.config["StartRow"]:
+               for joint in joint_order:
+                    print(joint)
+                    print("X:" + row[c.config["Joints"][joint]["x"]])
+                    print("Y:" + row[c.config["Joints"][joint]["y"]])
+                    print("Z:" + row[c.config["Joints"][joint]["z"]])
+
             if row_idx > c.config["StartRow"]:
                 # Write the frame field
                 if frame > 0:
@@ -72,13 +79,13 @@ def convert_vertical(filename, output, c):
                     out.write("{\\\"s\\\":" + str(c.config["Joints"][joint]["status"]).strip() + ",")
                     out.write("\\\"p\\\":\\\"(" + str(
                         (float(row[c.config["Joints"][joint]["x"]]) + float(c.config["x-offset"])) * float(
-                            c.config["blow-up"])).strip() + ","
+                            c.config["magnify"])).strip() + ","
                               + str(
                         (float(row[c.config["Joints"][joint]["y"]]) + float(c.config["y-offset"])) * float(
-                            c.config["blow-up"])).strip() + ","
+                            c.config["magnify"])).strip() + ","
                               + str(
                         (float(row[c.config["Joints"][joint]["z"]]) + float(c.config["z-offset"])) * float(
-                            c.config["blow-up"])).strip() + ")\\\",")
+                            c.config["magnify"])).strip() + ")\\\",")
                     out.write("\\\"q\\\":\\\"(0,0)\\\",")
                     out.write("\\\"o\\\":\\\"(0,0,0,0)\\\"}")
                     if joint != joint_order[len(joint_order) - 1]:
