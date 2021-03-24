@@ -12,7 +12,7 @@
   "x-offset": 0,
   "y-offset": 0,
   "z-offset": 50,
-  "blow-up": 5,
+  "magnify": 5,
   "Joints": {
     "Head": {
       "x": 49,
