@@ -45,13 +45,6 @@ def convert_vertical(filename, output, c):
         row_idx = 0
         frame = 0
         for row in csv.reader(f):
-            if row_idx <= c.config["StartRow"]:
-               for joint in joint_order:
-                    print(joint)
-                    print("X:" + row[c.config["Joints"][joint]["x"]])
-                    print("Y:" + row[c.config["Joints"][joint]["y"]])
-                    print("Z:" + row[c.config["Joints"][joint]["z"]])
-
             if row_idx > c.config["StartRow"]:
                 # Write the frame field
                 if frame > 0:
