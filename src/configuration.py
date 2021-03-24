@@ -20,6 +20,7 @@ class Configuration:
         "x-offset": 0,
         "y-offset": 0,
         "z-offset": 0,
+        "blow-up": 1,
         "Joints": {  # These are the order of the joints in the file
             "Head": {
                 "x": -1,
@@ -176,5 +177,8 @@ class Configuration:
 
         if "z-offset" in data:
             self.config["z-offset"] = data["z-offset"]
+
+        if "blow-up" in data:
+            self.config["blow-up"] = data["blow-up"]
 
         self.config["Joints"] = data["Joints"]

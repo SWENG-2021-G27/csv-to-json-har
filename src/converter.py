@@ -71,11 +71,14 @@ def convert_vertical(filename, output, c):
                 for joint in joint_order:
                     out.write("{\\\"s\\\":" + str(c.config["Joints"][joint]["status"]).strip() + ",")
                     out.write("\\\"p\\\":\\\"(" + str(
-                        float(row[c.config["Joints"][joint]["x"]]) + float(c.config["x-offset"])).strip() + ","
+                        (float(row[c.config["Joints"][joint]["x"]]) + float(c.config["x-offset"])) * float(
+                            c.config["blow-up"])).strip() + ","
                               + str(
-                        float(row[c.config["Joints"][joint]["y"]]) + float(c.config["y-offset"])).strip() + ","
+                        (float(row[c.config["Joints"][joint]["y"]]) + float(c.config["y-offset"])) * float(
+                            c.config["blow-up"])).strip() + ","
                               + str(
-                        float(row[c.config["Joints"][joint]["z"]]) + float(c.config["z-offset"])).strip() + ")\\\",")
+                        (float(row[c.config["Joints"][joint]["z"]]) + float(c.config["z-offset"])) * float(
+                            c.config["blow-up"])).strip() + ")\\\",")
                     out.write("\\\"q\\\":\\\"(0,0)\\\",")
                     out.write("\\\"o\\\":\\\"(0,0,0,0)\\\"}")
                     if joint != joint_order[len(joint_order) - 1]:
