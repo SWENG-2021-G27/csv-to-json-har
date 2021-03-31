@@ -5,7 +5,9 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import StringVar
+from tkinter import PhotoImage
 from converter import *
+import time
 
 
 # app class that displays the different pages of the GUI
@@ -31,7 +33,7 @@ class App(tk.Tk):
         self.frames = {}
 
         # Fill the dictionary with the app pages
-        for F in (LandingPage, ConfigurationPage, ConclusionPage):
+        for F in (LandingPage, ConfigurationPage, ConvertPage, ConclusionPage):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -159,10 +161,43 @@ class ConfigurationPage(tk.Frame):
         dropdown.grid(row=4, column=2, sticky="EW", columnspan=3)
 
         submit_button = ttk.Button(self, text="Submit for conversion", style="B.TButton",
-                                   command=lambda: controller.submit_file_and_change_frame(ConclusionPage,
+                                   command=lambda: controller.submit_file_and_change_frame(ConvertPage,
                                                                                            self.format_var.get(),
                                                                                            self.file_var.get()))
         submit_button.grid(row=5, column=2, columnspan=3)
+
+
+# The Conversion Page
+
+class ConvertPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        # Change background colour
+        self.configure(bg="white")
+
+        # Configure the weight of the empty rows for spacing
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(5, weight=2)
+        self.grid_columnconfigure(0, weight=1)
+
+        # Create Labels
+        convert = ttk.Label(self, text="Converting", font=("Arial", 20, "bold"))
+        convert.config(background="white", foreground="black")
+        convert.grid(row=1, column=0)
+
+        # Buttons and Dropdowns
+        progress = ttk.Progressbar(self, length=300, mode='indeterminate')
+        progress.grid(pady=50)
+        progress.start(10)
+
+        cancel = ttk.Button(self, text="Cancel", command=lambda: controller.show_frame(ConfigurationPage))
+        cancel.grid(row=4, column=0)
+
+        # move to conclusion page when conversion complete (manual for now)
+        fin = ttk.Button(self, text="finish", command=lambda: controller.show_frame(ConclusionPage))
+        fin.grid(row=5, column=0)
 
 
 # The Conclusion Page
@@ -170,7 +205,7 @@ class ConclusionPage(tk.Frame):
 
     def download_file(self):
         self.file_var.set(filedialog.asksaveasfile(
-            initialdir="/", title="Save file",))
+            initialdir="/", title="Save file", ))
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -185,22 +220,19 @@ class ConclusionPage(tk.Frame):
         self.grid_columnconfigure(0, weight=1)
 
         # Create Labels
-        farewell = ttk.Label(self, text="All done!",
-                             font=("Arial", 20, "bold"))
+        farewell = ttk.Label(self, text="All done!", font=("Arial", 20, "bold"))
         farewell.config(background="white", foreground="black")
         farewell.grid(row=1, column=0)
 
         # Buttons and Dropdowns
         button_style = ttk.Style()
-        button_style.configure("B.TButton", font=("Arial", 9))
-        return_to_main_page = ttk.Button(self, text="Download File", style="B.TButton",
-                                         width=30, command=lambda: self.download_file)
-        return_to_main_page.grid(row=2, column=0)
+        button_style.configure("B.TButton", font=("Arial", 9), img=tk.PhotoImage(file="buttonImage.png"))
+        download = ttk.Button(self, text="Download File", style="B.TButton", width=30,
+                              command=lambda: self.download_file)
+        download.grid(row=2, column=0)
 
-        button_style = ttk.Style()
-        button_style.configure("B.TButton", font=("Arial", 9))
-        return_to_main_page = ttk.Button(self, text="Return to conversion page", style="B.TButton",
-                                         width=30, command=lambda: controller.show_frame(ConfigurationPage))
+        return_to_main_page = ttk.Button(self, text="Return to conversion page", style="B.TButton", width=30,
+                                         command=lambda: controller.show_frame(ConfigurationPage))
         return_to_main_page.grid(row=5, column=0)
 
 
@@ -208,7 +240,7 @@ class ConclusionPage(tk.Frame):
 def start_gui():
     gui = App()
     # created an app icon
-    gui.tk.call('wm', 'iconphoto', gui._w, tk.PhotoImage(file='GUIicon.png'))
+    gui.tk.call('wm', 'iconphoto', gui.w, tk.PhotoImage(file='GUIicon.png'))
     # added to keep all text on screen at all times
     gui.resizable(False, False)
     gui.mainloop()
