@@ -226,7 +226,7 @@ class ConclusionPage(tk.Frame):
 
         # Buttons and Dropdowns
         button_style = ttk.Style()
-        button_style.configure("B.TButton", font=("Arial", 9), img=tk.PhotoImage(file="buttonImage.png"))
+        button_style.configure("B.TButton", font=("Arial", 9))
         download = ttk.Button(self, text="Download File", style="B.TButton", width=30,
                               command=lambda: self.download_file)
         download.grid(row=2, column=0)
