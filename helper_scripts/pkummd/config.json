@@ -5,6 +5,7 @@
   "NumberOfSkeletons": 2,
   "NumberOfJoints": 25,
   "JointXYZAreConsecutive": true,
+  "ColumnSeperator" : "Spaces",
   "Structure": "Vertical",
   "StartRow": 0,
   "Frames": {
