@@ -68,9 +68,9 @@ def convert_vertical(filename, output, c):
                   for joint in joint_order:
                       out.write("{\\\"s\\\":2,")
                       out.write("\\\"p\\\":\\\"("
-                                + row[c.config["Joints"][joint]["x"]].strip() + ","
-                                + row[c.config["Joints"][joint]["y"]].strip() + ","
-                                + row[c.config["Joints"][joint]["z"]].strip() + ")\\\",")
+                                + str(float(row[c.config["Joints"][joint]["x"]]) * 100).strip() + ","
+                                + str(float(row[c.config["Joints"][joint]["y"]]) * 100).strip() + ","
+                                + str((float(row[c.config["Joints"][joint]["z"]]) * -100) + 100).strip() + ")\\\",")
                       out.write("\\\"q\\\":\\\"(0,0)\\\",")
                       out.write("\\\"o\\\":\\\"(0,0,0,0)\\\"}")
                       if joint != joint_order[len(joint_order) - 1]:

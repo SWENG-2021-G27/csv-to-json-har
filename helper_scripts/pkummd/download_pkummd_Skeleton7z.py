@@ -51,6 +51,8 @@ def save_response_content(response, destination):
 
 file_id = '0B20a4UzO-OyMQW9wVHhlVmZBR0k'
 sep = os.path.sep
-destination = os.path.abspath('..' + sep + '..' + sep + 'RawDatasets' + sep + 'PKUMMD' ) + 'Skeleton.7z'
+destination_folder = os.path.abspath('..' + sep + '..' + sep + 'RawDatasets' + sep + 'PKUMMD' )
+os.mkdir(destination_folder)
+destination = destination_folder + sep +'Skeleton.7z'
 print('Downloading PKUMMD zip to ' + destination)
 download_file_from_google_drive(file_id, destination)

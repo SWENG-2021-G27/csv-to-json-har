@@ -3,8 +3,8 @@ import os
 sep = os.path.sep
 
 config_file = os.path.abspath('config.json')
-input_file = os.path.abspath('TestData' + sep + '0002-M.txt')
-output_file = os.path.abspath('TestOutput' + sep + '0002-M.json')
+input_file = os.path.abspath('TestData' + sep + '0222-M.txt')
+output_file = os.path.abspath('TestOutput' + sep + '0222-M.json')
 
 os.chdir('..' + sep + '..')
 os.chdir('src')
