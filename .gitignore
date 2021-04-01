@@ -141,3 +141,6 @@ dmypy.json
 
 # vim
 **/Session.vim
+
+# ignore all folders called pngs
+**/pngs/**
