@@ -141,3 +141,6 @@ dmypy.json
 
 # vim
 **/Session.vim
+
+# pngs created by RobotAnimationCreator
+**/pngs/**

@@ -21,6 +21,7 @@ class Configuration:
         "x-offset": 0,
         "y-offset": 0,
         "z-offset": 0,
+        "magnify": 1,
         "Joints": {  # These are the order of the joints in the file
             "Head": {
                 "x": -1,
@@ -180,5 +181,8 @@ class Configuration:
 
         if "z-offset" in data:
             self.config["z-offset"] = data["z-offset"]
+
+        if "magnify" in data:
+            self.config["magnify"] = data["magnify"]
 
         self.config["Joints"] = data["Joints"]
