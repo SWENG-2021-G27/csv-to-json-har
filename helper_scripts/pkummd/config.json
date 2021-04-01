@@ -6,7 +6,6 @@
   "NumberOfJoints": 25,
   "JointXYZAreConsecutive": true,
   "Structure": "Vertical",
-  "ColumnSeperator": "Spaces",
   "StartRow": 0,
   "Frames": {
       "FramesInfo": false,
