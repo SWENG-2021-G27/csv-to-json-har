@@ -45,7 +45,8 @@ def convert_vertical(filename, output, c):
       column_separator = None # the default separator for str.split() is any whitespace so we can use the default
     else: # default column separator is comma
       column_separator = ','
-        
+    
+    """        
     if(False and c.config["ColumnSeperator"] == "Spaces"):
       # Read file with space separated columns
       with open(os.path.abspath(filename), "r") as f:
@@ -94,7 +95,7 @@ def convert_vertical(filename, output, c):
 
           row_idx += 1  
       out.write("]}\"}")
-    
+    """  
     
     # Read every row of the csv (or other filetype) and process the data accordingly
     with open(filename) as f:
@@ -127,15 +128,29 @@ def convert_vertical(filename, output, c):
 
           for joint in joint_order:
             out.write("{\\\"s\\\":" + str(c.config["Joints"][joint]["status"]).strip() + ",")
-            out.write("\\\"p\\\":\\\"(" + str(
-              (float(row[c.config["Joints"][joint]["x"]]) * float(c.config["magnify"])) + float(
-                c.config["x-offset"])).strip() + ","
-                  + str(
-              (float(row[c.config["Joints"][joint]["y"]]) * float(c.config["magnify"])) + float(
-                c.config["y-offset"])).strip() + ","
-                  + str(
-              (float(row[c.config["Joints"][joint]["z"]]) * float(c.config["magnify"])) + float(
-                c.config["z-offset"])).strip() + ")\\\",")
+            out.write(
+             "\\\"p\\\":\\\"(" 
+             + str(
+              float(row[c.config["Joints"][joint]["x"]]) * float(c.config["magnify"]["x"])
+              + float(
+                c.config["x-offset"]
+              )
+             ).strip() + ","
+             + str(
+              float(row[c.config["Joints"][joint]["y"]]) * float(c.config["magnify"]["y"])
+              + float(
+                c.config["y-offset"]
+              )
+             ).strip() + ","
+             + str(
+              float(
+                row[c.config["Joints"][joint]["z"]]) * float(c.config["magnify"]["z"])
+                + float(
+                  c.config["z-offset"]
+                )
+             ).strip()
+             + ")\\\","
+            )
             out.write("\\\"q\\\":\\\"(0,0)\\\",")
             out.write("\\\"o\\\":\\\"(0,0,0,0)\\\"}")
             if joint != joint_order[len(joint_order) - 1]:
