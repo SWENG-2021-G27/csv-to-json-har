@@ -11,8 +11,8 @@
   },
   "x-offset": 0,
   "y-offset": 0,
-  "z-offset": 100,
-  "magnify": 1.5,
+  "z-offset": 200,
+  "magnify": 2,
   "Joints": {
     "Head": {
       "x": 37,
