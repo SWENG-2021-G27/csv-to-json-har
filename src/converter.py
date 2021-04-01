@@ -42,7 +42,12 @@ def convert_vertical(filename, output, c):
               + "\"t\":\"{\\\"Items\\\":[")
     
     if(c.config["ColumnSeperator"] == "Spaces"):
-      # Read file with space seperated columns
+      column_separator = None # the default separator for str.split() is any whitespace so we can use the default
+    else: # default column separator is comma
+      column_separator = ','
+        
+    if(False and c.config["ColumnSeperator"] == "Spaces"):
+      # Read file with space separated columns
       with open(os.path.abspath(filename), "r") as f:
         row_idx = 0
         frame = 0
@@ -90,59 +95,60 @@ def convert_vertical(filename, output, c):
           row_idx += 1  
       out.write("]}\"}")
     
-    else:
-      # Read every row of the csv and process the data accordingly
-      with open(filename) as f:
-        row_idx = 0
-        frame = 0
-        for row in csv.reader(f):
-            if row_idx > c.config["StartRow"]:
-                # Write the frame field
-                if frame > 0:
-                    out.write(",")
-                out.write("{\\\"f\\\":")
+    
+    # Read every row of the csv (or other filetype) and process the data accordingly
+    with open(filename) as f:
+      row_idx = 0
+      frame = 0
+      for line in f:
+        row = line.split(column_separator)
+        if row_idx > c.config["StartRow"]:
+          # Write the frame field
+          if frame > 0:
+            out.write(",")
+          out.write("{\\\"f\\\":")
 
-                if c.config["Frames"]["FramesInfo"]:
-                    time = row[c.config["Frames"]["FrameIdx"]]
-                    if frame >= int(float(time) * 33):
-                        frame = frame + 1
-                    else:
-                        frame = int(float(time) * 33)
-                    out.write(str(frame))
-                else:
-                    out.write(str((frame + 1) * 33))
-                    frame = frame + 1
+          if c.config["Frames"]["FramesInfo"]:
+            time = row[c.config["Frames"]["FrameIdx"]]
+            if frame >= int(float(time) * 33):
+              frame = frame + 1
+            else:
+              frame = int(float(time) * 33)
+            out.write(str(frame))
+          else:
+            out.write(str((frame + 1) * 33))
+            frame = frame + 1
 
-                out.write(",")
+          out.write(",")
 
-                # Write the joint information appropriately
-                out.write("\\\"b\\\":{\\\"i\\\":" + str(frame + 1) + ",")
-                out.write("\\\"j\\\":[")
+          # Write the joint information appropriately
+          out.write("\\\"b\\\":{\\\"i\\\":" + str(frame + 1) + ",")
+          out.write("\\\"j\\\":[")
 
-                for joint in joint_order:
-                    out.write("{\\\"s\\\":" + str(c.config["Joints"][joint]["status"]).strip() + ",")
-                    out.write("\\\"p\\\":\\\"(" + str(
-                        (float(row[c.config["Joints"][joint]["x"]]) * float(c.config["magnify"])) + float(
-                            c.config["x-offset"])).strip() + ","
-                              + str(
-                        (float(row[c.config["Joints"][joint]["y"]]) * float(c.config["magnify"])) + float(
-                            c.config["y-offset"])).strip() + ","
-                              + str(
-                        (float(row[c.config["Joints"][joint]["z"]]) * float(c.config["magnify"])) + float(
-                            c.config["z-offset"])).strip() + ")\\\",")
-                    out.write("\\\"q\\\":\\\"(0,0)\\\",")
-                    out.write("\\\"o\\\":\\\"(0,0,0,0)\\\"}")
-                    if joint != joint_order[len(joint_order) - 1]:
-                        out.write(",")
+          for joint in joint_order:
+            out.write("{\\\"s\\\":" + str(c.config["Joints"][joint]["status"]).strip() + ",")
+            out.write("\\\"p\\\":\\\"(" + str(
+              (float(row[c.config["Joints"][joint]["x"]]) * float(c.config["magnify"])) + float(
+                c.config["x-offset"])).strip() + ","
+                  + str(
+              (float(row[c.config["Joints"][joint]["y"]]) * float(c.config["magnify"])) + float(
+                c.config["y-offset"])).strip() + ","
+                  + str(
+              (float(row[c.config["Joints"][joint]["z"]]) * float(c.config["magnify"])) + float(
+                c.config["z-offset"])).strip() + ")\\\",")
+            out.write("\\\"q\\\":\\\"(0,0)\\\",")
+            out.write("\\\"o\\\":\\\"(0,0,0,0)\\\"}")
+            if joint != joint_order[len(joint_order) - 1]:
+              out.write(",")
 
-                out.write("],")
-                out.write("\\\"r\\\":0,")
-                out.write("\\\"l\\\":0,")
-                out.write("\\\"_negativeGroundOffset\\\":0.0,")
-                out.write("\\\"_previousNegativeGroundOffset\\\":0.0")
-                out.write("}")
-                out.write("}")
+          out.write("],")
+          out.write("\\\"r\\\":0,")
+          out.write("\\\"l\\\":0,")
+          out.write("\\\"_negativeGroundOffset\\\":0.0,")
+          out.write("\\\"_previousNegativeGroundOffset\\\":0.0")
+          out.write("}")
+          out.write("}")
 
-            row_idx = row_idx + 1
+        row_idx = row_idx + 1
 
-        out.write("]}\"}")
+      out.write("]}\"}")
