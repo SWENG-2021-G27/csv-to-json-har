@@ -11,18 +11,32 @@ sep = os.path.sep
 
 # WARNING the current working directory is determined by where the program is called from not where the program is. If the user is not in the src directory when the program is called, the relative paths will not work
 # We can use the first command line argument to change to src see if __name__ ==... section below
-input_directory = ".." + sep + "RawDatasets"  # Default input directory
+input_path = ".." + sep + "RawDatasets"  # Default input directory
 # neimhin: I think this should be changed such that for each folder in RawDatasets we check if there's a config.json and use that for that folder
-config_file = ".." + sep + "RawDatasets" + sep + "config.json"  # Default config file
-output_directory = ".." + sep + "ConvertedJsonDatasets"  # Default output directory
+config_file = None
+output_directory = None  # Default output directory
+
+# In case we need to know where the user called the program from we can use this variable
+global user_working_directory = os.getcwd()
 
 
+global options = {
+  "config_file_path": None,
+  "input_path": None,
+  "output_path" : None,
+}
+
+global extra_options = {
+  "single_file" : None,
+  "gui" : None,
+}
 
 # This function will either launch the GUI or operate as a CLI.
 # Functionality is determined by the number of command line arguments.
 def main():
     # Load in command line arguments
     command_line_arguments = sys.argv
+    eaten = 
     # If the -gui field is present in the command line arguments, open the GUI
     if "--gui" in command_line_arguments or '-g' in command_line_arguments:
         if(len(command_line_arguments) > 2):
@@ -32,36 +46,55 @@ def main():
         # Therefore end the main function if start the gui
         return
       
+    # We should be able to handle both cases where --input is a folder or a file
+    global single_file = False
+
     global input_directory
     global config_file
     global output_directory
 
-    # If the -input field is present in the command line arguments, update the input directory
-    if "--input" in command_line_arguments:
-        idx = command_line_arguments.index("--input")
+    # If the --input field is present in the command line arguments, update the input directory
+    overwriting = None
+    for opt in ['-i','--input']:
+      if opt in command_line_arguments:
+        idx = command_line_arguments.index(opt)
         if idx >= len(command_line_arguments) - 1:
-            print("\n    [ERROR]: --input field incorrectly specified. The --input option takes exactly one parameter. Zero given.")
+            print("\n    [ERROR]: " + opt + " field incorrectly specified. The " + opt + " option takes exactly one parameter. Zero given.")
             return
-        elif not os.path.exists(command_line_arguments[idx + 1]):
-            print("\n    [ERROR]: --input path does not exist")
+        else:
+          path = command_line_arguments[idx + 1]
+          command_line_arguments.pop(idx)
+          command_line_arguments.pop(idx)
+          if not os.path.exists(path):
+            print("\n    [ERROR]: " + path " (parameter of " + opt + " option) does not exist")
             return
-        elif not os.path.isdir(command_line_arguments[idx + 1]):
-            print("\n    [ERROR]: --input path is not a directory")
-            return
+          elif not os.path.isdir(path):
+            single_file = True
 
+        options["input_path"]
+        if( not single_file ):
+          config_file = input_path + sep + "config.json"
+          output_directory = input_path + sep + "Output"
+       
+        # in case both -i and --input are given we take --input overwriting -i
+        if(overwriting != None):
+          print("\n    [WARNING]: Overwriting " + overwriting + " option. Using " + opt +" instead of " + overwriting)
+        overwriting = opt
 
-        input_directory = command_line_arguments[idx + 1]
-        config_file = input_directory + "\\config.json"
-        output_directory = input_directory + "\\Output"
-
-    # If the -config field is present in the command line arguments
-    if "--config" in command_line_arguments:
-        idx = command_line_arguments.index("-config")
+    # If the --config field is present in the command line arguments
+    overwriting = None
+    for opt in ['-c', '--config']:
+      if opt in command_line_arguments:
+        idx = command_line_arguments.index(opt)
         if idx >= len(command_line_arguments) - 1:
-            print("\n    [ERROR]: --config field incorrectly specified")
+            print("\n    [ERROR]: " + opt + " field incorrectly specified. --config takes exactly one argument. Zero given.")
             return
-        elif not os.path.exists(command_line_arguments[idx + 1]):
-            print("\n    [ERROR]: -" + command_line_arguments[idx + 1] + " (parameter of the --config option)  does not exist")
+        else:
+          path = command_line_arguments[idx + 1]
+          command_line_arguments.pop(idx)
+          command_line_arguments.pop(idx)
+          if not os.path.exists(command_line_arguments[idx + 1]):
+            print("\n    [ERROR]: " + command_line_arguments[idx + 1] + " (parameter of the --config option)  does not exist")
             return
         elif not os.path.isfile(command_line_arguments[idx + 1]):
             print("\n    [ERROR]: " + command_line_arguments[idx + 1] + " (parameter of the --config option)  is not a file")
@@ -76,10 +109,15 @@ def main():
     if "--output" in command_line_arguments:
         idx = command_line_arguments.index("-output")
         if idx >= len(command_line_arguments) - 1:
-            print("\n    [ERROR]: -output field incorrectly specified")
+            print("\n    [ERROR]: --output field incorrectly specified")
             return
+        else:
+          path = command_line_arguments[idx + 1]
+          exists = os.path.exists(path)
+          if( exists and not os.path.isdir(path) and not single_file):
+            print("\n    [ERROR]: The argument of the --input option is a directory but output is a file. --output takes the path to a directory unless the input is a file, in which case --output can take a file which will be created or overwritten." 
 
-        output_directory = command_line_arguments[idx + 1]
+          output_directory = command_line_arguments[idx + 1]
 
     # If the output directory does not exist, create it
     if not os.path.exists(output_directory):
