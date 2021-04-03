@@ -7,28 +7,29 @@ import sys
 import os
 import re
 from colorama import Fore, Style
+from colorama import init as colorama_init
 
+# This makes the coloring cross platform
+colorama_init()
+
+# Use "<dir>" + sep + "<dir>"  instead of <dir>\\<dir> or <dir>/<dir> for building paths to make it cross-platform
 sep = os.path.sep
 
 
 # WARNING the current working directory is determined by where the program is called from not where the program is. If the user is not in the src directory when the program is called, the relative paths will not work
 # We can use the first command line argument to change to src see if __name__ ==... section below
-#input_path = ".." + sep + "RawDatasets"  # Default input directory
 # neimhin: I think this should be changed such that for each folder in RawDatasets we check if there's a config.json and use that for that folder
-#config_file = None
-#output_directory = None  # Default output directory
 
 # In case we need to know where the user called the program from we can use this variable
 user_working_directory = os.getcwd()
 
-
 def warn(warning):
   # warning in yellow
-  print("\n    " + Fore.YELLOW + "[WARNING]: " + Style.RESET_ALL + warning)
+  print("\n\t" + Fore.YELLOW + "[WARNING]: " + Style.RESET_ALL + warning)
 
 def error(error_msg):
   # error in red
-  print("\n    " + Fore.RED + "[ERROR]: " + Style.RESET_ALL + error_msg) 
+  print("\n\t" + Fore.RED + "[ERROR]: " + Style.RESET_ALL + error_msg + "\n") 
   sys.exit(-1)
 
 options = {
@@ -47,7 +48,7 @@ extra_options = {
 def main():
     # Load in command line arguments
     command_line_arguments = sys.argv
-    print(Fore.GREEN + "\n    Parsing the following arguments " + Style.RESET_ALL + str(command_line_arguments[1:]))
+    print(Fore.GREEN + "\n\tParsing the following arguments: " + Style.RESET_ALL + str(command_line_arguments[1:]))
     # If the -gui field is present in the command line arguments, open the GUI
     if "--gui" in command_line_arguments or '-g' in command_line_arguments:
         extra_options["gui"] = False
