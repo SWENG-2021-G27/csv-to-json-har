@@ -5,6 +5,8 @@ from converter import *
 from configuration import *
 import sys
 import os
+import re
+from colorama import Fore, Style
 
 sep = os.path.sep
 
@@ -19,6 +21,15 @@ sep = os.path.sep
 # In case we need to know where the user called the program from we can use this variable
 user_working_directory = os.getcwd()
 
+
+def warn(warning):
+  # warning in yellow
+  print("\n    " + Fore.YELLOW + "[WARNING]: " + Style.RESET_ALL + warning)
+
+def error(error_msg):
+  # error in red
+  print("\n    " + Fore.RED + "[ERROR]: " + Style.RESET_ALL + error_msg) 
+  sys.exit(-1)
 
 options = {
   "config_file_path": None,
@@ -36,6 +47,7 @@ extra_options = {
 def main():
     # Load in command line arguments
     command_line_arguments = sys.argv
+    print(Fore.GREEN + "\n    Parsing the following arguments " + Style.RESET_ALL + str(command_line_arguments[1:]))
     # If the -gui field is present in the command line arguments, open the GUI
     if "--gui" in command_line_arguments or '-g' in command_line_arguments:
         extra_options["gui"] = False
@@ -52,14 +64,14 @@ def main():
       if opt in command_line_arguments:
         idx = command_line_arguments.index(opt)
         if idx >= len(command_line_arguments) - 1:
-            print("\n    [ERROR]: " + opt + " field incorrectly specified. The " + opt + " option takes exactly one parameter. Zero given.")
+            error( Fore.BLUE + opt + Style.RESET_ALL + " field incorrectly specified. The " + Fore.BLUE + opt + Style.RESET_ALL + " option takes exactly one parameter. Zero given.")
             return
         else:
           path = command_line_arguments[idx + 1]
           command_line_arguments.pop(idx)
           command_line_arguments.pop(idx)
           if not os.path.exists(path):
-            print("\n    [ERROR]: " + path + " (parameter of " + opt + " option) does not exist")
+            error( path + " (parameter of " + opt + " option) does not exist")
             return
           elif os.path.isfile(path):
             extra_options["single_file"] = True
@@ -73,7 +85,7 @@ def main():
        
         # in case both -i and --input are given we take --input overwriting -i
         if(overwriting != None):
-          print("\n    [WARNING]: Overwriting " + overwriting + " option. Using " + opt +" instead of " + overwriting)
+          warn("Overwriting " + overwriting + " option. Using " + opt +" instead of " + overwriting)
         overwriting = opt
 
     # If the --config field is present in the command line arguments
@@ -82,26 +94,22 @@ def main():
       if opt in command_line_arguments:
         idx = command_line_arguments.index(opt)
         if idx >= len(command_line_arguments) - 1:
-            print("\n    [ERROR]: " + opt + " field incorrectly specified. " + opt + " takes exactly one argument. Zero given.")
-            return
+            error(opt + " field incorrectly specified. " + opt + " takes exactly one argument. Zero given.")
         
         path = command_line_arguments[idx + 1]
         command_line_arguments.pop(idx)
         command_line_arguments.pop(idx)
         if not os.path.exists(path):
-          print("\n    [ERROR]: " + path + " (parameter of the " + opt + " option)  does not exist")
-          return
+          error(path + " (parameter of the " + opt + " option)  does not exist")
         if not os.path.isfile(path):
-          print("\n    [ERROR]: " + path + " (parameter of the " + opt + " option)  is not a file")
-          return
+          error(path + " (parameter of the " + opt + " option)  is not a file")
         if not path.endswith(".json"):
-          print("\n    [ERROR]: " + path + " (parameter of the " + opt + " option)  is not a json.\n TODO: provide help for the json format.")
-          return
+          error( path + " (parameter of the " + opt + " option)  is not a json.\n TODO: provide help for the json format.")
 
         options["config_file_path"] = path
         if( overwriting != None ):
-            print("\n    [WARNING]: Ignoring " + overwriting + " in favour of " + opt + " " + path)     
-        overwriting = opt
+            warn(" Ignoring " + overwriting + " in favour of " + opt + " " + path)     
+        overwriting = opt + " " + path
 
     # If the --output field is present in the command line arguments, update the output directory
     overwriting = None
@@ -124,20 +132,43 @@ def main():
           overwriting = opt
           options["output_path"] = path
 
-    if(len(command_line_arguments) > 1):
+
+    # We don't need the first argument (i.e. the path to main.py)
+    command_line_arguments.pop(0)
+    # Filter through any remaining options and report that they were invalid
+    # i.e. any arguments beginning with - or --
+    single_char_switch = re.compile("-[a-z]")
+    multi_char_switch = re.compile("--[a-z]+")
+    too_many_chars = re.compile("-[^-].+")
+    idx = 0
+    while idx < len(command_line_arguments):
+        arg = command_line_arguments[idx]
+        if(re.match(single_char_switch, arg)):
+          print("\n    [WARNING]: " + arg + " is not a recognised switch and is being ignored")
+          command_line_arguments.pop(idx)
+        elif(re.match(too_many_chars, arg)):
+          print("\n    [WARNING]: " + arg + " is not a recognised switch and is being ignored.\nNOTE: multi character switches begin with two dashes, e.g. --config, wheras single character switches begin with one dash, e.g -c")
+          command_line_arguments.pop(idx)
+        elif(re.match(multi_char_switch, arg)):
+          print("\n    [WARNING]: " + arg + " is not a recognised switch and is being ignored.")
+          command_line_arguments.pop(idx)
+        else:
+          idx += 1
+
+    if(len(command_line_arguments) > 0):
       # Show command line arguments that weren't consumed. The first argument should not have been consumed. It is the name of the program that was called.
-      print("The following command line arguments were not loaded: ")
+      print("\n    [WARING]: The following command line arguments were not matched in any pattern and were not loaded: ")
       print(command_line_arguments)
 
-    # If the output directory does not exist, create it
-    if not os.path.exists(output_directory):
-      try:
-        os.mkdir(output_directory)
-      except OSError:
-        print("\n    [ERROR]: failed to create output directory " + output_directory)
-        return
-    
     # Load the configuration appropriately
+    if(options["config_file_path"] == None):
+      error("No config file has been specified. Specify the path of the config file with --config <path>. Aborting.")
+    
+    if(options["input_path"] == None):
+      error("No input path has been specified. Specify the path of the file or folder to be converted with --input <path>. Aborting.")
+
+    if(options["output_path"] == None):
+      error("No output location has been specified. Specify the path of the file to write converted json to with --ouput <path>. If the input is a single file, output may also be a single file. Aborting.")
     x = Configuration(options["config_file_path"])
 
     
@@ -145,6 +176,12 @@ def main():
       pass
     # Convert all csv files in the input directory
     else:
+      if not os.path.exists(options["output_path"]):
+        try:
+          os.makedirs(output_directory)
+        except OSError:
+          print("\n    [ERROR]: failed to create output directory " + output_directory)
+          return
       for filename in os.listdir(options["input_path"]):
         if filename.endswith(".csv") or filename.endswith(".txt"):
             base = os.path.splitext(filename)[0]
