@@ -80,8 +80,8 @@ def main():
 
         options["input_path"] = path
         if(not extra_options["single_file"]):
-          options["config_file_path"] = input_path + sep + "config.json"
-          options["output_path"] = input_path + sep + "Output"
+          options["config_file_path"] = options["input_path"] + sep + "config.json"
+          options["output_path"] = options["input_path"] + sep + "Output"
        
         # in case both -i and --input are given we take --input overwriting -i
         if(overwriting != None):
@@ -178,15 +178,14 @@ def main():
     else:
       if not os.path.exists(options["output_path"]):
         try:
-          os.makedirs(output_directory)
+          os.makedirs(options["output_path"])
         except OSError:
-          print("\n    [ERROR]: failed to create output directory " + output_directory)
-          return
+          error("Failed to create output directory " + options["output_path"])
       for filename in os.listdir(options["input_path"]):
         if filename.endswith(".csv") or filename.endswith(".txt"):
             base = os.path.splitext(filename)[0]
             if x.config["Structure"] == "Vertical": 
-                convert_vertical(options["input_path"] + sep + filename, output_directory + sep  + base + ".json", x)
+                convert_vertical(options["input_path"] + sep + filename, options["output_path"] + sep  + base + ".json", x)
 
 
 if __name__ == "__main__":
