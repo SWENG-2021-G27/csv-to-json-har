@@ -21,7 +21,11 @@ class Configuration:
         "x-offset": 0,
         "y-offset": 0,
         "z-offset": 0,
-        "magnify": 1,
+        "magnify": {
+            "x": 5,
+            "y": 5,
+            "z": 5
+        },
         "Joints": {  # These are the order of the joints in the file
             "Head": {
                 "x": -1,
