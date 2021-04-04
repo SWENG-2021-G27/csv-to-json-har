@@ -1,10 +1,13 @@
 # gui.py
 # This file will contain the source code for the GUI
 
+from main import error
+from configuration import Configuration
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import StringVar
+import os
 from tkinter import PhotoImage
 from converter import *
 import time
@@ -23,7 +26,7 @@ class App(tk.Tk):
 
         # Create a container
         container = tk.Frame(self, bg="white")
-        tk.Tk.geometry(self, "500x500")
+        tk.Tk.geometry(self, "600x600")
         container.pack(side="top", fill="both", expand=True)
 
         container.grid_rowconfigure(0, weight=1)
@@ -45,10 +48,25 @@ class App(tk.Tk):
         frame = self.frames[cont]
         frame.tkraise()
 
-    def submit_file_and_change_frame(self, cont, file_format, file):
+    def submit_file_and_change_frame(self, cont, input_folder, config, output):
         self.show_frame(cont)
-        print(file_format)
-        print(file)
+        print(type(input_folder))
+        print(type(config))
+        print(type(output))
+        x = Configuration(config)
+        if not os.path.exists(output):
+            try:
+                os.makedirs(output)
+            except OSError:
+                error("Failed to create output directory " + output)
+                gui.quit()
+        for filename in os.listdir(input_folder):
+            if filename.endswith(".csv") or filename.endswith(".txt"):
+                base = os.path.splitext(filename)[0]
+                if x.config["Structure"] == "Vertical":
+                    convert_vertical(input_folder + os.path.sep + filename,
+                                     output + os.path.sep + base + ".json", x)
+        self.show_frame(ConclusionPage)
 
 
 # The Landing Page
@@ -86,39 +104,92 @@ class LandingPage(tk.Frame):
         button.grid(row=4, column=0)
 
 
-format_options = [
-    "Please Select a Dataset",
-    "One",
-    "Two",
-    "Three"
-]
-
-
 # The Conversion Configuration Page
 class ConfigurationPage(tk.Frame):
-    def select_file(self):
-        self.file_var.set(filedialog.askopenfilename())
-        self.file_name_to_display.set(self.file_var.get()[0:50] + "...")
+    def select_folder(self):
+        self.error.config(background="white", foreground="black")
+        self.error_message.set("")
+        self.folder_var.set("")
+        self.folder_to_display.set("")
+        folder = filedialog.askdirectory()
+        if os.path.isdir(folder):
+            self.folder_var.set(folder)
+            self.folder_to_display.set(self.folder_var.get()[0:50] + "...")
+        else:
+            self.error.config(background="indian red", foreground="black")
+            if len(folder) < 50:
+                self.error_message.set("  " + folder + " is not valid a folder  ")
+            else:
+                self.error_message.set("  " + folder[0:50] + "... is not valid a folder  ")
+
+    def select_config(self):
+        self.error.config(background="white", foreground="black")
+        self.error_message.set("")
+        self.file_var.set("")
+        self.file_to_display.set("")
+        config = filedialog.askopenfile()
+        if os.path.isfile(config.name) and config.name.endswith(".json"):
+            self.file_var.set(config.name)
+            self.file_to_display.set(self.file_var.get()[0:50] + "...")
+        elif not config.name.endswith(".json"):
+            self.error.config(background="indian red", foreground="black")
+            if len(config.name) < 50:
+                self.error_message.set("  " + config.name + " is not valid a json file  ")
+            else:
+                self.error_message.set("  " + config.name[0:50] + "... is not json file  ")
+        else:
+            self.error.config(background="indian red", foreground="black")
+            if len(config.name) < 50:
+                self.error_message.set("  " + config.name + " is not valid a file  ")
+            else:
+                self.error_message.set("  " + config.name[0:50] + "... is not valid a file  ")
+
+    def select_output(self):
+        self.error.config(background="white", foreground="black")
+        self.error_message.set("")
+        self.output_var.set("")
+        self.output_to_display.set("")
+        folder = filedialog.askdirectory()
+        if os.path.isdir(folder):
+            self.output_var.set(folder)
+            self.output_to_display.set(self.folder_var.get()[0:50] + "...")
+        else:
+            self.error.config(background="indian red", foreground="black")
+            if len(folder) < 50:
+                self.error_message.set("  " + folder + " is not valid a folder  ")
+            else:
+                self.error_message.set("  " + folder[0:50] + "... is not valid a folder  ")
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        # Variables to store what the user has selected
+        # Variables to store what the user has selected and error message
+        self.folder_var = StringVar()
+        self.folder_var.set("")
+        self.folder_to_display = StringVar()
+        self.folder_to_display.set("")
         self.file_var = StringVar()
         self.file_var.set("")
-        self.file_name_to_display = StringVar()
-        self.file_name_to_display.set("")
-        self.format_var = StringVar()
-        self.format_var.set(format_options[0])
+        self.file_to_display = StringVar()
+        self.file_to_display.set("")
+        self.output_var = StringVar()
+        self.output_var.set("")
+        self.output_to_display = StringVar()
+        self.output_to_display.set("")
+        self.error_message = StringVar()
+        self.error_message.set("")
 
         # Configure the weight of the rows and columns for spacing
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
         self.grid_rowconfigure(3, weight=1)
         self.grid_rowconfigure(5, weight=1)
-        self.grid_rowconfigure(6, weight=10)
+        self.grid_rowconfigure(6, weight=1)
+        self.grid_rowconfigure(7, weight=3)
+        self.grid_rowconfigure(8, weight=3)
         self.grid_columnconfigure(0, weight=3)
         self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(3, weight=3)
         self.grid_columnconfigure(5, weight=10)
 
         # Change background colour
@@ -131,40 +202,67 @@ class ConfigurationPage(tk.Frame):
         list_two = ttk.Label(self, text="2", font=("Arial", 20, "bold"))
         list_two.config(background="white", foreground="#40c3f7")
         list_two.grid(row=3, column=1, sticky="W")
+        list_three = ttk.Label(self, text="3", font=("Arial", 20, "bold"))
+        list_three.config(background="white", foreground="#40c3f7")
+        list_three.grid(row=5, column=1, sticky="W")
 
         # List Messages
         upload_file_message = ttk.Label(
-            self, text="Upload File:", font=("Arial", 20, "bold"))
+            self, text="Select Input Folder:", font=("Arial", 20, "bold"))
         upload_file_message.config(background="white", foreground="black")
         upload_file_message.grid(row=1, column=2, sticky="W")
 
         file = ttk.Label(
-            self, textvariable=self.file_name_to_display, font=("Arial", 9))
+            self, textvariable=self.folder_to_display, font=("Arial", 9))
         file.config(background="white", foreground="black")
         file.grid(row=2, column=2, sticky="W", columnspan=3)
 
         select_format_message = ttk.Label(
-            self, text="Select format:", font=("Arial", 20, "bold"))
+            self, text="Select config file:", font=("Arial", 20, "bold"))
         select_format_message.config(background="white", foreground="black")
         select_format_message.grid(row=3, column=2, sticky="W")
+
+        file1 = ttk.Label(
+            self, textvariable=self.file_to_display, font=("Arial", 9))
+        file1.config(background="white", foreground="black")
+        file1.grid(row=4, column=2, sticky="W", columnspan=3)
+
+        select_output_message = ttk.Label(
+            self, text="Select Output Folder:", font=("Arial", 20, "bold"))
+        select_output_message.config(background="white", foreground="black")
+        select_output_message.grid(row=5, column=2, sticky="W")
+
+        file2 = ttk.Label(
+            self, textvariable=self.output_to_display, font=("Arial", 9))
+        file2.config(background="white", foreground="black")
+        file2.grid(row=6, column=2, sticky="W", columnspan=3)
 
         # Buttons and Dropdowns
         button_style = ttk.Style()
         button_style.configure("B.TButton", font=("Arial", 9))
-        upload_file_button = ttk.Button(self, text="Browse Files...", style="B.TButton", width=15,
-                                        command=self.select_file)
-        upload_file_button.grid(row=1, column=3, sticky="W")
+        upload_folder_button = ttk.Button(self, text="Browse Folders...", style="B.TButton", width=15,
+                                          command=self.select_folder)
+        upload_folder_button.grid(row=1, column=3, sticky="E")
 
-        dropdown_style = ttk.Style()
-        dropdown_style.configure("TMenubutton", font=("Arial", 9))
-        dropdown = ttk.OptionMenu(self, self.format_var, *format_options)
-        dropdown.grid(row=4, column=2, sticky="EW", columnspan=3)
+        upload_config_button = ttk.Button(self, text="Browse Files...", style="B.TButton", width=15,
+                                          command=self.select_config)
+        upload_config_button.grid(row=3, column=3, sticky="E")
+
+        upload_output_button = ttk.Button(self, text="Browse Folders...", style="B.TButton", width=15,
+                                          command=self.select_output)
+        upload_output_button.grid(row=5, column=3, sticky="E")
 
         submit_button = ttk.Button(self, text="Submit for conversion", style="B.TButton",
                                    command=lambda: controller.submit_file_and_change_frame(ConvertPage,
-                                                                                           self.format_var.get(),
-                                                                                           self.file_var.get()))
-        submit_button.grid(row=5, column=2, columnspan=3)
+                                                                                           self.folder_var.get(),
+                                                                                           self.file_var.get(),
+                                                                                           self.output_var.get()))
+        submit_button.grid(row=7, column=2, columnspan=3, )
+
+        # Error Message
+        self.error = ttk.Label(self, textvariable=self.error_message, font=("Arial", 9))
+        self.error.config(background="white", foregroun="black")
+        self.error.grid(row=8, column=0, columnspan=6)
 
 
 # The Conversion Page
@@ -195,18 +293,9 @@ class ConvertPage(tk.Frame):
         cancel = ttk.Button(self, text="Cancel", command=lambda: controller.show_frame(ConfigurationPage))
         cancel.grid(row=4, column=0)
 
-        # move to conclusion page when conversion complete (manual for now)
-        fin = ttk.Button(self, text="finish", command=lambda: controller.show_frame(ConclusionPage))
-        fin.grid(row=5, column=0)
-
 
 # The Conclusion Page
 class ConclusionPage(tk.Frame):
-
-    def download_file(self):
-        self.file_var.set(filedialog.asksaveasfile(
-            initialdir="/", title="Save file", ))
-
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -216,7 +305,6 @@ class ConclusionPage(tk.Frame):
         # Configure the weight of the empty rows for spacing
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(3, weight=2)
-        self.grid_rowconfigure(5, weight=2)
         self.grid_columnconfigure(0, weight=1)
 
         # Create Labels
@@ -227,20 +315,18 @@ class ConclusionPage(tk.Frame):
         # Buttons and Dropdowns
         button_style = ttk.Style()
         button_style.configure("B.TButton", font=("Arial", 9))
-        download = ttk.Button(self, text="Download File", style="B.TButton", width=30,
-                              command=lambda: self.download_file)
-        download.grid(row=2, column=0)
-
         return_to_main_page = ttk.Button(self, text="Return to conversion page", style="B.TButton", width=30,
                                          command=lambda: controller.show_frame(ConfigurationPage))
-        return_to_main_page.grid(row=5, column=0)
+        return_to_main_page.grid(row=3, column=0)
 
 
 # This function creates an instance of the app class and displays the GUI
+gui = App()
+
+
 def start_gui():
-    gui = App()
     # created an app icon
-    #gui.tk.call('wm', 'iconphoto', gui.w, tk.PhotoImage(file='GUIicon.png'))
+    # gui.tk.call('wm', 'iconphoto', gui.w, tk.PhotoImage(file='GUIicon.png'))
     # added to keep all text on screen at all times
     gui.resizable(False, False)
     gui.mainloop()
