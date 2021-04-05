@@ -7,10 +7,15 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import StringVar
+import threading
 import os
+import sys
 from tkinter import PhotoImage
 from converter import *
 import time
+import signal
+
+shut_off = False
 
 
 # app class that displays the different pages of the GUI
@@ -42,30 +47,37 @@ class App(tk.Tk):
             frame.grid(row=0, column=0, sticky="nsew")
 
         self.show_frame(LandingPage)
+        self.th = threading.Thread(target=self.submit_file)
 
     # Display the current page
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+        if cont == ConvertPage:
+            self.th.start()
 
-    def submit_file_and_change_frame(self, cont, input_folder, config, output):
-        self.show_frame(cont)
-        print(type(input_folder))
-        print(type(config))
-        print(type(output))
+    # Submit file to be converted
+    def submit_file(self):
+        global shut_off
+        global config
+        global input_folder
+        global output_folder
         x = Configuration(config)
-        if not os.path.exists(output):
+        if not os.path.exists(output_folder):
             try:
-                os.makedirs(output)
+                os.makedirs(output_folder)
             except OSError:
-                error("Failed to create output directory " + output)
+                error("Failed to create output directory " + output_folder)
                 gui.quit()
         for filename in os.listdir(input_folder):
+            if shut_off:
+                sys.exit(0)
+                return
             if filename.endswith(".csv") or filename.endswith(".txt"):
                 base = os.path.splitext(filename)[0]
                 if x.config["Structure"] == "Vertical":
                     convert_vertical(input_folder + os.path.sep + filename,
-                                     output + os.path.sep + base + ".json", x)
+                                     output_folder + os.path.sep + base + ".json", x)
         self.show_frame(ConclusionPage)
 
 
@@ -127,22 +139,22 @@ class ConfigurationPage(tk.Frame):
         self.error_message.set("")
         self.file_var.set("")
         self.file_to_display.set("")
-        config = filedialog.askopenfile()
-        if os.path.isfile(config.name) and config.name.endswith(".json"):
-            self.file_var.set(config.name)
+        config1 = filedialog.askopenfile()
+        if os.path.isfile(config1.name) and config1.name.endswith(".json"):
+            self.file_var.set(config1.name)
             self.file_to_display.set(self.file_var.get()[0:50] + "...")
-        elif not config.name.endswith(".json"):
+        elif not config1.name.endswith(".json"):
             self.error.config(background="indian red", foreground="black")
-            if len(config.name) < 50:
-                self.error_message.set("  " + config.name + " is not valid a json file  ")
+            if len(config1.name) < 50:
+                self.error_message.set("  " + config1.name + " is not valid a json file  ")
             else:
-                self.error_message.set("  " + config.name[0:50] + "... is not json file  ")
+                self.error_message.set("  " + config1.name[0:50] + "... is not json file  ")
         else:
             self.error.config(background="indian red", foreground="black")
-            if len(config.name) < 50:
-                self.error_message.set("  " + config.name + " is not valid a file  ")
+            if len(config1.name) < 50:
+                self.error_message.set("  " + config1.name + " is not valid a file  ")
             else:
-                self.error_message.set("  " + config.name[0:50] + "... is not valid a file  ")
+                self.error_message.set("  " + config1.name[0:50] + "... is not valid a file  ")
 
     def select_output(self):
         self.error.config(background="white", foreground="black")
@@ -159,6 +171,15 @@ class ConfigurationPage(tk.Frame):
                 self.error_message.set("  " + folder + " is not valid a folder  ")
             else:
                 self.error_message.set("  " + folder[0:50] + "... is not valid a folder  ")
+
+    def move_on(self):
+        global config
+        global input_folder
+        global output_folder
+        config = self.file_var.get()
+        input_folder = self.folder_var.get()
+        output_folder = self.output_var.get()
+        self.controller.show_frame(ConvertPage)
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -178,6 +199,7 @@ class ConfigurationPage(tk.Frame):
         self.output_to_display.set("")
         self.error_message = StringVar()
         self.error_message.set("")
+        self.controller = controller
 
         # Configure the weight of the rows and columns for spacing
         self.grid_rowconfigure(0, weight=1)
@@ -253,10 +275,7 @@ class ConfigurationPage(tk.Frame):
         upload_output_button.grid(row=5, column=3, sticky="E")
 
         submit_button = ttk.Button(self, text="Submit for conversion", style="B.TButton",
-                                   command=lambda: controller.submit_file_and_change_frame(ConvertPage,
-                                                                                           self.folder_var.get(),
-                                                                                           self.file_var.get(),
-                                                                                           self.output_var.get()))
+                                   command=lambda: self.move_on())
         submit_button.grid(row=7, column=2, columnspan=3, )
 
         # Error Message
@@ -265,9 +284,17 @@ class ConfigurationPage(tk.Frame):
         self.error.grid(row=8, column=0, columnspan=6)
 
 
-# The Conversion Page
+config = ""
+input_folder = ""
+output_folder = ""
 
+
+# The Conversion Page
 class ConvertPage(tk.Frame):
+    def exit_app(self):
+        global shut_off
+        shut_off = True
+        sys.exit(0)
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -290,7 +317,7 @@ class ConvertPage(tk.Frame):
         progress.grid(pady=50)
         progress.start(10)
 
-        cancel = ttk.Button(self, text="Cancel", command=lambda: controller.show_frame(ConfigurationPage))
+        cancel = ttk.Button(self, text="Cancel", command=lambda: self.exit_app())
         cancel.grid(row=4, column=0)
 
 
