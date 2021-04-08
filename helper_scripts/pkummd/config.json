@@ -1,17 +1,17 @@
 {
   "Device": 3,
-  "Ground": [0, 1, 0, 0],
+  "Ground": [0, 1, 0, 0.6],
   "Offset": 0,
   "NumberOfSkeletons": 2,
   "NumberOfJoints": 25,
   "JointXYZAreConsecutive": false,
   "JointXYZOrder" : ["z", "x", "y"],
   "magnify" : {
-      "x" : -100,
-      "y" : -100,
+      "x" : 100,
+      "y" : 100,
       "z" : -100
     },
-  "z-offset" : -1000,
+  "z-offset" : 1000,
   "ColumnSeperator" : "Spaces",
   "Structure": "Vertical",
   "StartRow": 0,
