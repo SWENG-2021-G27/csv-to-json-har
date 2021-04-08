@@ -210,4 +210,4 @@ if __name__ == "__main__":
     print("Current working directory is now: " + os.getcwd())
     """
     main()
-    print("Finished!")
+    print(Fore.GREEN + "\tFinished!" + Style.RESET_ALL)
