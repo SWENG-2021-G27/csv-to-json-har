@@ -240,7 +240,7 @@ class ConfigurationPage(tk.Frame):
         file.grid(row=2, column=2, sticky="W", columnspan=3)
 
         select_format_message = ttk.Label(
-            self, text="Select config file:", font=("Arial", 20, "bold"))
+            self, text="Select Config File:", font=("Arial", 20, "bold"))
         select_format_message.config(background="white", foreground="black")
         select_format_message.grid(row=3, column=2, sticky="W")
 
