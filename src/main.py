@@ -166,8 +166,8 @@ def main():
         else:
             idx += 1
 
-
-  
+    
+    # Consume remaining arguments
     if (len(command_line_arguments) > 0):
       # Assign remaining options in default order
       for opt in options.keys():
@@ -180,6 +180,7 @@ def main():
     # Use default_options for any options that are still None
     for opt in options.keys():
       if options[opt] == None:
+        warn("Using default " + opt)
         options[opt] = default_options[opt]  
       
     if (len(command_line_arguments) > 0):
