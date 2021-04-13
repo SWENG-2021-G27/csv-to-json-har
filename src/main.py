@@ -33,6 +33,11 @@ def error(error_msg):
     print("\n\t" + Fore.RED + "[ERROR]: " + Style.RESET_ALL + error_msg + "\n")
     sys.exit(-1)
 
+default_options = {
+    "config_file_path": ".." + sep + "RawDatasets" + sep + "PKUMMD" + sep + "config.json",
+    "input_path": ".." + sep + "RawDatasets" + sep + "PKUMMD",
+    "output_path": ".." + sep + "ConvertedJsonOutput" + sep + "PKUMMD",
+}
 
 options = {
     "config_file_path": None,
@@ -150,22 +155,36 @@ def main():
     while idx < len(command_line_arguments):
         arg = command_line_arguments[idx]
         if (re.match(single_char_switch, arg)):
-            print("\n    [WARNING]: " + arg + " is not a recognised switch and is being ignored")
+            warn(arg + " is not a recognised switch and is being ignored")
             command_line_arguments.pop(idx)
         elif (re.match(too_many_chars, arg)):
-            print(
-                "\n    [WARNING]: " + arg + " is not a recognised switch and is being ignored.\nNOTE: multi character switches begin with two dashes, e.g. --config, wheras single character switches begin with one dash, e.g -c")
+            warn(arg + " is not a recognised switch and is being ignored.\nNOTE: multi character switches begin with two dashes, e.g. --config, wheras single character switches begin with one dash, e.g -c")
             command_line_arguments.pop(idx)
         elif (re.match(multi_char_switch, arg)):
-            print("\n    [WARNING]: " + arg + " is not a recognised switch and is being ignored.")
+            warn(arg + " is not a recognised switch and is being ignored.")
             command_line_arguments.pop(idx)
         else:
             idx += 1
 
+
+  
+    if (len(command_line_arguments) > 0):
+      # Assign remaining options in default order
+      for opt in options.keys():
+        if(len(command_line_arguments) == 0):
+          break
+        if options[opt] == None:
+          options[opt] = command_line_arguments[0]
+          command_line_arguments.pop(0)
+    
+    # Use default_options for any options that are still None
+    for opt in options.keys():
+      if options[opt] == None:
+        options[opt] = default_options[opt]  
+      
     if (len(command_line_arguments) > 0):
         # Show command line arguments that weren't consumed. The first argument should not have been consumed. It is the name of the program that was called.
-        print(
-            "\n    [WARING]: The following command line arguments were not matched in any pattern and were not loaded: ")
+        warn("The following command line arguments were not matched in any pattern and were not loaded: ")
         print(command_line_arguments)
 
     # Load the configuration appropriately
