@@ -1,0 +1,136 @@
+{
+    "Device": 3,
+    "Ground": [0, 1, 0, 0.6],
+    "NumberOfSkeletons": 1,
+    "NumberOfJoints": 19,
+    "Structure": "Vertical",
+    "StartRow": 1,
+    "Frames": {
+        "FramesInfo": true,
+        "FrameIdx": 0
+    },
+    "x-offset": 0,
+    "y-offset": 0,
+    "z-offset": 300,
+    "magnify": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+    },
+    "Joints": {
+        "Head": {
+            "x": 16,
+            "y": 17,
+            "z": 18,
+            "status": 1
+        },
+        "Neck": {
+            "x": 13,
+            "y": 14,
+            "z": 15,
+            "status": 1
+        },
+        "LeftShoulder": {
+            "x": 37,
+            "y": 38,
+            "z": 39,
+            "status": 1
+        },
+        "RightShoulder": {
+            "x": 19,
+            "y": 20,
+            "z": 21,
+            "status": 1
+        },
+        "LeftElbow": {
+            "x": 43,
+            "y": 44,
+            "z": 45,
+            "status": 1
+        },
+        "RightElbow": {
+            "x": 25,
+            "y": 26,
+            "z": 27,
+            "status": 1
+        },
+        "LeftWrist": {
+            "x": 49,
+            "y": 50,
+            "z": 51,
+            "status": 2
+        },
+        "RightWrist": {
+            "x": 31,
+            "y": 32,
+            "z": 33,
+            "status": 1
+        },
+        "LeftHand": {
+            "x": 52,
+            "y": 53,
+            "z": 54,
+            "status": 2
+        },
+        "RightHand": {
+            "x": 34,
+            "y": 35,
+            "z": 36,
+            "status": 1
+        },
+        "TopSpine": {
+            "x": 10,
+            "y": 11,
+            "z": 12,
+            "status": 1
+        },
+        "MidSpine": {
+            "x": 7,
+            "y": 8,
+            "z": 9,
+            "status": 1
+        },
+        "BaseSpine": {
+            "x": 4,
+            "y": 5,
+            "z": 6,
+            "status": 1
+        },
+        "LeftHip": {
+            "x": 73,
+            "y": 74,
+            "z": 75,
+            "status": 1
+        },
+        "RightHip": {
+            "x": 55,
+            "y": 56,
+            "z": 57,
+            "status": 1
+        },
+        "LeftKnee": {
+            "x": 79,
+            "y": 80,
+            "z": 81,
+            "status": 1
+        },
+        "RightKnee": {
+            "x": 61,
+            "y": 62,
+            "z": 63,
+            "status": 1
+        },
+        "LeftFoot": {
+            "x": 85,
+            "y": 86,
+            "z": 87,
+            "status": 1
+        },
+        "RightFoot": {
+            "x": 67,
+            "y": 68,
+            "z": 69,
+            "status": 1
+        }
+    }
+}
