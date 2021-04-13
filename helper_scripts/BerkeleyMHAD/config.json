@@ -31,46 +31,46 @@
             "status": 1
         },
         "LeftShoulder": {
-            "x": 37,
-            "y": 38,
-            "z": 39,
+            "x": 40,
+            "y": 41,
+            "z": 42,
             "status": 1
         },
         "RightShoulder": {
-            "x": 19,
-            "y": 20,
-            "z": 21,
+            "x": 22,
+            "y": 23,
+            "z": 24,
             "status": 1
         },
         "LeftElbow": {
-            "x": 43,
-            "y": 44,
-            "z": 45,
+            "x": 46,
+            "y": 47,
+            "z": 48,
             "status": 1
         },
         "RightElbow": {
-            "x": 25,
-            "y": 26,
-            "z": 27,
+            "x": 28,
+            "y": 29,
+            "z": 30,
             "status": 1
         },
         "LeftWrist": {
-            "x": 49,
-            "y": 50,
-            "z": 51,
-            "status": 2
+            "x": 52,
+            "y": 53,
+            "z": 54,
+            "status": 1
         },
         "RightWrist": {
-            "x": 31,
-            "y": 32,
-            "z": 33,
+            "x": 34,
+            "y": 35,
+            "z": 36,
             "status": 1
         },
         "LeftHand": {
             "x": 52,
             "y": 53,
             "z": 54,
-            "status": 2
+            "status": 1
         },
         "RightHand": {
             "x": 34,
