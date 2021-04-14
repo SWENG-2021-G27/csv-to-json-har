@@ -1,6 +1,11 @@
 import pandas as pd
-from scipy.io import loadmat
+import scipy.io
+import os
+import sys
 
+sep = os.path.sep
+
+file_to_convert =  "TestData" + sep + "S1_1_1.mat"
 
 def mat2csv(file_mat, file_csv, index=False):
     mat = loadmat(file_mat)
@@ -21,3 +26,10 @@ def mat2csv(file_mat, file_csv, index=False):
     df = pd.DataFrame(data)
     df.to_csv(file_csv, index=index)
 
+
+
+mat =  scipy.io.loadmat(file_to_convert)
+
+print(mat.keys())
+
+print("Finished")
