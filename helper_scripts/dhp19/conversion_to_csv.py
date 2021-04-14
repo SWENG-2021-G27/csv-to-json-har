@@ -32,4 +32,7 @@ mat =  scipy.io.loadmat(file_to_convert)
 
 print(mat.keys())
 
+print(mat['XYZPOS'][0])
+print(type(mat['XYZPOS'][0]))
+
 print("Finished")
