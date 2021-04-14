@@ -38,7 +38,11 @@ default_options = {
     "input_path": ".." + sep + "RawDatasets" + sep + "PKUMMD",
     "output_path": ".." + sep + "ConvertedJsonOutput" + sep + "PKUMMD",
 }
-
+option_flag = {
+    "config_file_path": "--config",
+    "input_path": "--input",
+    "output_path": "--output",
+}
 options = {
     "config_file_path": None,
     "input_path": None,
@@ -180,7 +184,7 @@ def main():
     # Use default_options for any options that are still None
     for opt in options.keys():
       if options[opt] == None:
-        warn("Using default " + opt)
+        warn("Using default " + opt + ": " + default_options[opt] + "\n\tUse " + Fore.BLUE+ option_flag[opt] + " <" + opt +">" + Style.RESET_ALL + " to set the " + opt +" manually.")
         options[opt] = default_options[opt]  
       
     if (len(command_line_arguments) > 0):
