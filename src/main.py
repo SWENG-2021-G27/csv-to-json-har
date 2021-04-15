@@ -191,11 +191,14 @@ def main():
             except OSError:
                 error("Failed to create output directory " + options["output_path"])
         for filename in os.listdir(options["input_path"]):
-            if filename.endswith(".csv") or filename.endswith(".txt"):
+            if filename.endswith(x.config["FileExtension"]):
                 base = os.path.splitext(filename)[0]
                 if x.config["Structure"] == "Vertical":
                     convert_vertical(options["input_path"] + sep + filename,
                                      options["output_path"] + sep + base + ".json", x)
+                elif x.config["Structure"] == "NTU":
+                    convert_ntu(options["input_path"] + sep + filename,
+                                options["output_path"] + sep + base + ".json", x)
 
 
 if __name__ == "__main__":
