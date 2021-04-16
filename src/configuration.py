@@ -27,7 +27,7 @@ class Configuration:
             "z": 5
         },
         "JointMap": None,
-        "FileExtension": None,
+        "FileExtension": ".csv",
         "Joints": {  # These are the order of the joints in the file
             "Head": {
                 "x": -1,
