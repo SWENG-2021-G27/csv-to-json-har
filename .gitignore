@@ -145,5 +145,7 @@ dmypy.json
 # RobotAnimationCreator pngs
 /RobotAnimationCreator/out/**
 
+# Default output location
+**/ConvertedJsonOutput/**
 # Any set of pngs created by Dr. Bossavits program
 **/pngs/**
