@@ -1,4 +1,4 @@
-dependencies: python3 pip tqdm requests py7zr colorama
+dependencies: python3 pip tqdm requests py7zr colorama Tkinter
 
 python3:
 	python3 --version
@@ -25,3 +25,6 @@ py7zr:
 
 colorama:
 	pip install colorama
+
+Tkinter:
+	pip install tkinter
