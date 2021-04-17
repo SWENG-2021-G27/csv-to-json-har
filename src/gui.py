@@ -8,12 +8,9 @@ from tkinter import ttk
 from tkinter import filedialog
 from tkinter import StringVar
 import threading
-import os
 import sys
-from tkinter import PhotoImage
 from converter import *
-import time
-import signal
+from main import *
 
 shut_off = False
 
@@ -63,21 +60,15 @@ class App(tk.Tk):
         global input_folder
         global output_folder
         x = Configuration(config)
-        if not os.path.exists(output_folder):
-            try:
-                os.makedirs(output_folder)
-            except OSError:
-                error("Failed to create output directory " + output_folder)
-                gui.quit()
-        for filename in os.listdir(input_folder):
-            if shut_off:
-                sys.exit(0)
-                return
-            if filename.endswith(".csv") or filename.endswith(".txt"):
-                base = os.path.splitext(filename)[0]
-                if x.config["Structure"] == "Vertical":
-                    convert_vertical(input_folder + os.path.sep + filename,
-                                     output_folder + os.path.sep + base + ".json", x)
+        # Convert all csv files in the input directory
+        if x.config["Structure"] == "Vertical":
+            os.chdir(input_folder)
+            recursive_convert_vertical('.', output_folder, x)
+        elif x.config["Structure"] == "NTU":
+            os.chdir(input_folder)
+            recursive_convert_ntu('.', output_folder, x)
+        else:
+            error("No Structure provided in config.json. Possible Structure values are: \"Vertical\", \"NTU\"")
         self.show_frame(ConclusionPage)
 
 
