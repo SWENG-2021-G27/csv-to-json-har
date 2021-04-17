@@ -45,9 +45,9 @@ def blue(msg):
 
 
 default_options = {
-    "config_file_path": ".." + sep + "RawDatasets" + sep + "PKUMMD" + sep + "config.json",
-    "input_path": ".." + sep + "RawDatasets" + sep + "PKUMMD",
-    "output_folder": os.path.join(os.pardir, "ConvertedJsonOutput", "PKUMMD"),
+    "config_file_path": os.path.join(user_working_directory, "config.json"),
+    "input_path": user_working_directory,
+    "output_folder": os.path.join(user_working_directory,"ConvertedJsonOutput"),
 }
 option_flag = {
     "config_file_path": "--config",
