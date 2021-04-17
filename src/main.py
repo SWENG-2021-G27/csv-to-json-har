@@ -47,7 +47,7 @@ def blue(msg):
 default_options = {
     "config_file_path": os.path.join(user_working_directory, "config.json"),
     "input_path": user_working_directory,
-    "output_folder": os.path.join(user_working_directory,"ConvertedJsonOutput"),
+    "output_folder": os.path.join(user_working_directory, "ConvertedJsonOutput"),
 }
 option_flag = {
     "config_file_path": "--config",
@@ -126,12 +126,13 @@ def main():
             warn(arg + " is not a recognised switch and is being ignored")
             command_line_arguments.pop(idx)
         elif re.match(too_many_chars, arg):
-         warn(arg+" is not a recognised switch and is being ignored.\n\tNOTE: multi character switches begin with " +
-              "two dashes, e.g. --config, wheras single character switches begin with one dash, e.g -c")
-         command_line_arguments.pop(idx)
+            warn(
+                arg + " is not a recognised switch and is being ignored.\n\tNOTE: multi character switches begin with " +
+                "two dashes, e.g. --config, wheras single character switches begin with one dash, e.g -c")
+            command_line_arguments.pop(idx)
         elif re.match(multi_char_switch, arg):
-          warn(arg + " is not a recognised switch and is being ignored.")
-          command_line_arguments.pop(idx)
+            warn(arg + " is not a recognised switch and is being ignored.")
+            command_line_arguments.pop(idx)
         else:
             idx += 1
 
@@ -146,18 +147,17 @@ def main():
                 command_line_arguments.pop(0)
 
     # Update default options if input_path has been given
-    if(options["input_path"] is not None):
-      input_parent = None
-      if(os.path.isfile(options["input_path"])):
-        input_parent = os.path.join(options["input_path"], os.pardir)
-      elif(os.path.isdir(options["input_path"])):
-        input_parent = options["input_path"]
-      elif(not os.path.exists(options["input_path"])):
-        error(options["input_path"] + " does not exist. Aborting.")
+    if (options["input_path"] is not None):
+        input_parent = None
+        if (os.path.isfile(options["input_path"])):
+            input_parent = os.path.join(options["input_path"], os.pardir)
+        elif (os.path.isdir(options["input_path"])):
+            input_parent = options["input_path"]
+        elif (not os.path.exists(options["input_path"])):
+            error(options["input_path"] + " does not exist. Aborting.")
 
-      default_options["config_file_path"] = os.path.join(input_parent,"config.json")
-      default_options["output_folder"] = os.path.join(input_parent,"ConvertedJsonOutput")
-
+        default_options["config_file_path"] = os.path.join(input_parent, "config.json")
+        default_options["output_folder"] = os.path.join(input_parent, "ConvertedJsonOutput")
 
     # Use default_options for any options that are still None
     for opt in options.keys():
@@ -179,9 +179,8 @@ def main():
         error(blue(options["input_path"]) + " is neither a file nor a folder. Aborting.")
         sys.exit(-1)
 
-
     try:
-      x = configuration.Configuration(options["config_file_path"])
+        x = configuration.Configuration(options["config_file_path"])
     except OSError as e:
         error(str(e) + ": OSError raised while loading config from " + blue(options["config_file_path"]))
     except ValueError as e:
@@ -190,7 +189,7 @@ def main():
         error(str(e) + ": An unknown error has occurred while loading config from " + blue(options["config_file_path"]))
 
     if os.path.isfile(options["output_folder"]):
-        error(blue(options["output_folder"]) + " is a file. " + blue("output_folder") + " (given by " + 
+        error(blue(options["output_folder"]) + " is a file. " + blue("output_folder") + " (given by " +
               blue("-o") + " or " + blue("--output") + " must be a folder.")
     if not os.path.exists(options["output_folder"]):
         try:
@@ -200,51 +199,54 @@ def main():
         except Exception as e:
             error(str(e) + " An unknown fatal error has occurred while trying to creat the output folder " + blue(
                 options["output_folder"]))
-    
+
     options["output_folder"] = os.path.abspath(options["output_folder"])
 
     # Convert all csv files in the input directory
     if x.config["Structure"] == "Vertical":
-      os.chdir(options["input_path"]) 
-      recursive_convert_vertical('.', options["output_folder"], x)
+        os.chdir(options["input_path"])
+        recursive_convert_vertical('.', options["output_folder"], x)
     elif x.config["Structure"] == "NTU":
-      os.chdir(options["input_path"])
-      recursive_convert_ntu('.',os.path.abspath(options["output_folder"]), x)
+        os.chdir(options["input_path"])
+        recursive_convert_ntu('.', os.path.abspath(options["output_folder"]), x)
     else:
-      error("No Structure provided in config.json. Possible Structure values are: \"Vertical\", \"NTU\"")
+        error("No Structure provided in config.json. Possible Structure values are: \"Vertical\", \"NTU\"")
 
 
 def recursive_convert_vertical(input, output, config):
-  for file_or_dir in os.listdir(os.getcwd()):
-    if os.path.isdir(file_or_dir):
-      nice_msg("Descending into " + blue(os.path.abspath(file_or_dir)))
-      os.chdir(os.path.abspath(file_or_dir))
-      recursive_convert_vertical( os.getcwd(), os.path.join(output, file_or_dir), config)
-      nice_msg("Ascending back to " + blue(os.path.abspath(os.pardir)))
-      os.chdir(os.pardir)
-    elif os.path.isfile(file_or_dir) and file_or_dir.endswith(config.config["FileExtension"]):
-      base = os.path.splitext(file_or_dir)[0]
-      nice_msg("Converting: " + colorma.Style.RESET_ALL + os.path.join(input, file_or_dir) + blue(" into ") + "\n\t" + os.path.join(output, base + ".json"))
-      if not os.path.exists(output):
-        os.makedirs(output)
-      converter.convert_vertical(os.path.join(input,file_or_dir),
-                       os.path.join(output, base + ".json"), config)
+    for file_or_dir in os.listdir(os.getcwd()):
+        if os.path.isdir(file_or_dir):
+            nice_msg("Descending into " + blue(os.path.abspath(file_or_dir)))
+            os.chdir(os.path.abspath(file_or_dir))
+            recursive_convert_vertical(os.getcwd(), os.path.join(output, file_or_dir), config)
+            nice_msg("Ascending back to " + blue(os.path.abspath(os.pardir)))
+            os.chdir(os.pardir)
+        elif os.path.isfile(file_or_dir) and file_or_dir.endswith(config.config["FileExtension"]):
+            base = os.path.splitext(file_or_dir)[0]
+            nice_msg("Converting: " + colorama.Style.RESET_ALL + os.path.join(input, file_or_dir) + blue(
+                " into ") + "\n\t" + os.path.join(output, base + ".json"))
+            if not os.path.exists(output):
+                os.makedirs(output)
+            converter.convert_vertical(os.path.join(input, file_or_dir),
+                                       os.path.join(output, base + ".json"), config)
+
 
 def recursive_convert_ntu(input, output, config):
-  for file_or_dir in os.listdir('.'):
-    if os.path.isdir(file_or_dir):
-      nice_msg("Descending into " + blue(os.path.abspath(file_or_dir)))
-      os.chdir(file_or_dir)
-      recursive_convert_ntu(os.getcwd(), os.path.join(output, file_or_dir), config)
-      nice_msg("Ascending back to " + blue(os.path.abspath(os.pardir)))
-      os.chdir(os.pardir)
-    elif os.path.isfile(file_or_dir) and file_or_dir.endswith(config.config["FileExtension"]):
-      base = os.path.splitext(file_or_dir)[0]
-      nice_msg("Converting: " + os.path.abspath(os.path.join(input, file_or_dir)) + blue(" into ") + "\n\t" + os.path.join(output, base + ".json"))
-      if not os.path.exists(output):
-        os.makedirs(output)
-      converter.convert_ntu(os.path.join(input,file_or_dir),
-                       os.path.join(output, base + ".json"), config)
+    for file_or_dir in os.listdir('.'):
+        if os.path.isdir(file_or_dir):
+            nice_msg("Descending into " + blue(os.path.abspath(file_or_dir)))
+            os.chdir(file_or_dir)
+            recursive_convert_ntu(os.getcwd(), os.path.join(output, file_or_dir), config)
+            nice_msg("Ascending back to " + blue(os.path.abspath(os.pardir)))
+            os.chdir(os.pardir)
+        elif os.path.isfile(file_or_dir) and file_or_dir.endswith(config.config["FileExtension"]):
+            base = os.path.splitext(file_or_dir)[0]
+            nice_msg("Converting: " + os.path.abspath(os.path.join(input, file_or_dir)) + blue(
+                " into ") + "\n\t" + os.path.join(output, base + ".json"))
+            if not os.path.exists(output):
+                os.makedirs(output)
+            converter.convert_ntu(os.path.join(input, file_or_dir),
+                                  os.path.join(output, base + ".json"), config)
 
 
 if __name__ == "__main__":
