@@ -1,4 +1,5 @@
-dependencies: python3 pip tqdm requests py7zr colorama Tkinter
+dependencies: python3 pip tqdm requests py7zr colorama Tkinter bvhtoolbox
+	echo "All dependencies installed successfully"
 
 python3:
 	python3 --version
@@ -36,3 +37,6 @@ exe: pyinstaller
 
 pyinstaller:
 	pip install pyinstaller
+
+bvhtoolbox:
+	pip install bvhtoolbox
