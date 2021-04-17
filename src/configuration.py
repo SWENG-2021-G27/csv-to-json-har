@@ -26,6 +26,8 @@ class Configuration:
             "y": 5,
             "z": 5
         },
+        "JointMap": None,
+        "FileExtension": ".csv",
         "Joints": {  # These are the order of the joints in the file
             "Head": {
                 "x": -1,
@@ -189,4 +191,11 @@ class Configuration:
         if "magnify" in data:
             self.config["magnify"] = data["magnify"]
 
-        self.config["Joints"] = data["Joints"]
+        if "FileExtension" in data:
+            self.config["FileExtension"] = data["FileExtension"]
+
+        if "Joints" in data:
+            self.config["Joints"] = data["Joints"]
+
+        if "JointMap" in data:
+            self.config["JointMap"] = data["JointMap"] # TODO set reasonable defaults above or null defaults
