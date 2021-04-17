@@ -27,4 +27,12 @@ colorama:
 	pip install colorama
 
 Tkinter:
-	pip install tkinter
+	pip install tk
+
+
+exe: pyinstaller
+	pyinstaller --onefile src/main.py
+
+
+pyinstaller:
+	pip install pyinstaller
