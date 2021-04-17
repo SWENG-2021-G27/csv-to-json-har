@@ -167,7 +167,6 @@ def convert_ntu(filename, output, c):
 
           for joint in range(number_of_joints):
             joint_info = f.readline().split(column_separator)
-            print(joint_info)
             x = str(joint_info[0]).strip()
             y = str(joint_info[1]).strip()
             z = str(joint_info[2]).strip()
@@ -178,8 +177,6 @@ def convert_ntu(filename, output, c):
                 "z": z,
                 "trackingState": trackingState}
             all_joints.append(joint_info)
-
-          print(all_joints)
 
           for joint in joint_order:
             ntu_joint = all_joints[int(c.config["JointMap"][joint])]
