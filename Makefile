@@ -31,7 +31,7 @@ Tkinter:
 	pip install tk
 
 
-exe: pyinstaller
+exe: pyinstaller dependencies
 	pyinstaller --onefile src/main.py
 
 
