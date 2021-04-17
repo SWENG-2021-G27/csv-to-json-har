@@ -220,20 +220,23 @@ def recursive_convert_vertical(input, output, config):
       converter.convert_vertical(os.path.join(input,file_or_dir),
                        os.path.join(output, base + ".json"), config)
 
-
-
 def recursive_convert_ntu(input, output, config):
-  for file_or_dir in os.listdir(input):
+  for file_or_dir in os.listdir('.'):
     if os.path.isdir(file_or_dir):
-      os.chdir(input)
-      print(os.path.join(output,file_or_dir))
-      recursive_convert_ntu(os.getcwd(),
-                            os.path.join(output, file_or_dir), config)
+      nice_msg("Descending into " + blue(os.path.abspath(input)))
+      os.chdir(os.path.abspath(file_or_dir))
+      print(os.path.join(output, file_or_dir))
+      recursive_convert_ntu( os.getcwd(),
+                                  os.path.join(output, file_or_dir), config)
+      nice_msg("Ascending back to " + blue(os.path.abspath(os.pardir)))
       os.chdir(os.pardir)
     elif os.path.isfile(file_or_dir) and file_or_dir.endswith(config.config["FileExtension"]):
-      base = os.path.splitext(file_or_dir)[0] 
-      converter.convert_ntu(  os.path.join(input, file_or_dir),
-                    os.path.joint(output, base + ".json"), config)
+      base = os.path.splitext(file_or_dir)[0]
+      nice_msg("Converting: " + os.path.join(input, file_or_dir) + blue(" into ") + "\n\t" + os.path.join(output, base + ".json"))
+      if not os.path.exists(output):
+        os.makedirs(output)
+      converter.convert_ntu(os.path.join(input,file_or_dir),
+                       os.path.join(output, base + ".json"), config)
 
 
 if __name__ == "__main__":
