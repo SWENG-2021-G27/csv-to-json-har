@@ -1,0 +1,137 @@
+{
+  "Device": 3,
+  "Ground": [0, 1, 0, 0.6],
+  "NumberOfSkeletons": 1,
+  "NumberOfJoints": 19,
+  "Structure": "Vertical",
+  "StartRow": 20,
+  "Frames": {
+    "FramesInfo": true,
+    "FrameIdx": 0
+  },
+  "x-offset": 0,
+  "y-offset": 50,
+  "z-offset": 250,
+  "magnify" : {
+      "x" : 50,
+      "y" : 50,
+      "z" : 50
+    },
+  "ColumnSeperator" : "Spaces",
+  "Joints": {
+    "Head": {
+      "x": 13,
+      "y": 14,
+      "z": 15,
+	  "status": 1
+    },
+    "Neck": {
+      "x": 9,
+      "y": 10,
+      "z": 11,
+	  "status": 1
+    },
+    "LeftShoulder": {
+      "x": 17,
+      "y": 18,
+      "z": 19,
+	  "status": 1
+    },
+    "RightShoulder": {
+      "x": 33,
+      "y": 34,
+      "z": 35,
+	  "status": 1
+    },
+    "LeftElbow": {
+      "x": 21,
+      "y": 22,
+      "z":23,
+	  "status": 1
+    },
+    "RightElbow": {
+      "x": 37,
+      "y": 38,
+      "z": 39,
+	  "status": 1
+    },
+    "LeftWrist": {
+      "x": 25,
+      "y": 26,
+      "z": 27,
+	  "status": 1
+    },
+    "RightWrist": {
+      "x": 41,
+      "y": 42,
+      "z": 43,
+	  "status": 1
+    },
+    "LeftHand": {
+      "x": 29,
+      "y": 30,
+      "z": 31,
+	  "status": 1
+    },
+    "RightHand": {
+      "x": 45,
+      "y": 46,
+      "z": 47,
+	  "status": 1
+    },
+    "TopSpine": {
+      "x": 9,
+      "y": 10,
+      "z": 11,
+	  "status": 1
+    },
+    "MidSpine": {
+      "x": 5,
+      "y": 6,
+      "z": 7,
+	  "status": 1
+    },
+    "BaseSpine": {
+	  "x": 1,
+      "y": 2,
+      "z": 3,
+	  "status": 1
+    },
+    "LeftHip": {
+      "x": 49,
+      "y": 50,
+      "z": 51,
+	  "status": 1
+    },
+    "RightHip": {
+      "x": 65,
+      "y": 66,
+      "z": 67,
+	  "status": 1
+    },
+    "LeftKnee": {
+      "x": 53,
+      "y": 54,
+      "z": 55,
+	  "status": 1
+    },
+    "RightKnee": {
+      "x": 69,
+      "y": 70,
+      "z": 71,
+	  "status": 1
+    },
+    "LeftFoot": {
+      "x": 61,
+      "y": 62,
+      "z": 63,
+	  "status": 1
+    },
+    "RightFoot": {
+      "x": 77,
+      "y": 78,
+      "z": 79,
+	  "status": 1
+    }
+  }
+}
