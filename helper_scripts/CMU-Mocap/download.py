@@ -27,4 +27,4 @@ for url in urls:
     print("Downloading " + os.path.basename(url) + "...")
     with urlopen(url) as zip_resp:
         with ZipFile(BytesIO(zip_resp.read())) as zfile:
-            zfile.extractall('./CMU-Data/' + os.path.basename(url)[:len(os.path.basename(url)) - 4])
+            zfile.extractall('./CMU-Data-BVH/' + os.path.basename(url)[:len(os.path.basename(url)) - 4])
