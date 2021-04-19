@@ -17,117 +17,117 @@
     },
   "Joints": {
     "Head": {
-      "x": 37,
-      "y": 38,
-      "z": 39,
+      "x-column": 37,
+      "y-column": 38,
+      "z-column": 39,
 	  "status": 1
     },
     "Neck": {
-      "x": 34,
-      "y": 35,
-      "z": 36,
+      "x-column": 34,
+      "y-column": 35,
+      "z-column": 36,
 	  "status": 1
     },
     "LeftShoulder": {
-      "x": 43,
-      "y": 44,
-      "z": 45,
+      "x-column": 43,
+      "y-column": 44,
+      "z-column": 45,
 	  "status": 1
     },
     "RightShoulder": {
-      "x": 61,
-      "y": 62,
-      "z": 63,
+      "x-column": 61,
+      "y-column": 62,
+      "z-column": 63,
 	  "status": 1
     },
     "LeftElbow": {
-      "x": 46,
-      "y": 47,
-      "z": 48,
+      "x-column": 46,
+      "y-column": 47,
+      "z-column": 48,
 	  "status": 1
     },
     "RightElbow": {
-      "x": 64,
-      "y": 65,
-      "z": 66,
+      "x-column": 64,
+      "y-column": 65,
+      "z-column": 66,
 	  "status": 1
     },
     "LeftWrist": {
-      "x": 49,
-      "y": 50,
-      "z": 51,
+      "x-column": 49,
+      "y-column": 50,
+      "z-column": 51,
 	  "status": 1
     },
     "RightWrist": {
-      "x": 67,
-      "y": 68,
-      "z": 69,
+      "x-column": 67,
+      "y-column": 68,
+      "z-column": 69,
 	  "status": 1
     },
     "LeftHand": {
-      "x": 52,
-      "y": 53,
-      "z": 54,
+      "x-column": 52,
+      "y-column": 53,
+      "z-column": 54,
 	  "status": 1
     },
     "RightHand": {
-      "x": 70,
-      "y": 71,
-      "z": 72,
+      "x-column": 70,
+      "y-column": 71,
+      "z-column": 72,
 	  "status": 1
     },
     "TopSpine": {
-      "x": 34,
-      "y": 35,
-      "z": 36,
+      "x-column": 34,
+      "y-column": 35,
+      "z-column": 36,
 	  "status": 1
     },
     "MidSpine": {
-      "x": 31,
-      "y": 32,
-      "z": 33,
+      "x-column": 31,
+      "y-column": 32,
+      "z-column": 33,
 	  "status": 1
     },
     "BaseSpine": {
-	  "x": 28,
-      "y": 29,
-      "z": 30,
+	  "x-column": 28,
+      "y-column": 29,
+      "z-column": 30,
 	  "status": 1
     },
     "LeftHip": {
-      "x": 4,
-      "y": 5,
-      "z": 6,
+      "x-column": 4,
+      "y-column": 5,
+      "z-column": 6,
 	  "status": 1
     },
     "RightHip": {
-      "x": 16,
-      "y": 17,
-      "z": 18,
+      "x-column": 16,
+      "y-column": 17,
+      "z-column": 18,
 	  "status": 1
     },
     "LeftKnee": {
-      "x": 7,
-      "y": 8,
-      "z": 9,
+      "x-column": 7,
+      "y-column": 8,
+      "z-column": 9,
 	  "status": 1
     },
     "RightKnee": {
-      "x": 19,
-      "y": 20,
-      "z": 21,
+      "x-column": 19,
+      "y-column": 20,
+      "z-column": 21,
 	  "status": 1
     },
     "LeftFoot": {
-      "x": 10,
-      "y": 11,
-      "z": 12,
+      "x-column": 10,
+      "y-column": 11,
+      "z-column": 12,
 	  "status": 1
     },
     "RightFoot": {
-      "x": 22,
-      "y": 23,
-      "z": 24,
+      "x-column": 22,
+      "y-column": 23,
+      "z-column": 24,
 	  "status": 1
     }
   }
