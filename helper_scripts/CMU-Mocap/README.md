@@ -5,7 +5,12 @@ This folder has the following structure:
 ````
 CMU-Mocap
 |- TestData
-| |- config.json
+    |- config.json
+    |- <several CMU mocap files for testing>
+|- TestOutput
+    |- <potentially json output files>
+|- Verified
+    |- <copies from TestOutput that have been checked by a human>
 |- download.py
 |- bvh_to_csv.py
 ````

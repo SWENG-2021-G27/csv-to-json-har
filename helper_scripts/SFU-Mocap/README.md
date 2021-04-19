@@ -4,11 +4,17 @@
 This folder has the following structure:
 ````
 SFU-Mocap
-|- config.json
+|- TestData
+    |- config.json
+    |- <several SFU mocap files for testing>
+|- TestOutput
+    |- <potentially json output files>
+|- Verified
+    |- <copies from TestOutput that have been checked by a human>
 |- download.py
 |- bvh_to_csv.py
 ````
-`config.json` is a configuration file that can be used to convert the SFU Motion Capture Dataset into a series of 
+`TestDataconfig.json` is a configuration file that can be used to convert the SFU Motion Capture Dataset into a series of 
 appropriate JSON files for animation using the conversion application.
 
 `download.py` is a python script that will download the SFU Motion Capture Dataset into a new folder in the `./RawDatasets` 

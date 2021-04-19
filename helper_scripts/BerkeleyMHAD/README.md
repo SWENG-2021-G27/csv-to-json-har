@@ -4,12 +4,18 @@
 This folder has the following structure:
 ````
 BerkeleyMHAD
-|- config.json
+|- TestData
+    |- config.json
+    |- <several Berkeley MHAD files for testing>
+|- TestOutput
+    |- <potentially json output files>
+|- Verified
+    |- <copies from TestOutput that have been checked by a human>
 |- download_mhad.py
 |- unzip_mhad.py
 |- bvh_to_csv.py
 ````
-`config.json` is a configuration file that can be used to convert the Berkeley Multimodal Human Action Database into a 
+`TestData/config.json` is a configuration file that can be used to convert the Berkeley Multimodal Human Action Database into a 
 series of appropriate JSON files for animation using the conversion application.
 
 `download_mhad.py` is a python script that will download the Berkeley Multimodal Human Action Database as a `.zip` file 

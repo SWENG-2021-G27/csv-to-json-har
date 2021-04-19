@@ -4,11 +4,17 @@
 This folder has the following structure:
 ````
 CMU-Mocap
-|- config.json
+|- TestData
+    |- config.json
+    |- <several MRSC-12 mocap files for testing>
+|- TestOutput
+    |- <potentially json output files>
+|- Verified
+    |- <copies from TestOutput that have been checked by a human>
 |- download_MicrosoftGestureDataset.py
 |- unzip_MSRC.py
 ````
-`config.json` is a configuration file that can be used to convert the MRSC-12: Kinect Gesture Dataset into a series of 
+`TestData/config.json` is a configuration file that can be used to convert the MRSC-12: Kinect Gesture Dataset into a series of 
 appropriate JSON files for animation using the conversion application.
 
 `download_MicrosoftGestureDataset.py` is a python script that will download the CMU Motion Capture Dataset into a new 
