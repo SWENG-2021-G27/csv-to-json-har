@@ -1,32 +1,73 @@
 # csv-to-json-har
 
 ### Prerequisites
-To run this project, you need to following installed on your machine:
+To run this project, you need the following installed on your machine:
 - Python 3
-- Tkinter
+- GNU Make
+
+Other dependencies are listed in the Makefile.
+
+### Installation
+
+After you have installed **Python 3**
+clone the git repository:
+```bash
+git clone https://github.com/SWENG-2021-G27/csv-to-json-har.git
+```
+
+Move into the directory.
+```bash
+cd csv-to-json-har
+```
+
+Install the dependencies with:
+```bash
+make
+```
+
+Optionally build a compiled version of the program with:
+```bash
+make exe
+```
+
+After `make exe` has been run once successfully you can use `make exe-quick` to compile the exectuable more quickly. The executable `mocap_to_json` can be found in the `dist` folder. Add that folder to your path or link a file in your path to the executable if you'd like to be able to call the program from anywhere with just:
+```bash
+mocap_to_json
+```
+
+You can change the name of the executable to whatever you'd like.
 
 ### Running the Project
-Open the terminal and navigate to the src folder. You can then run the project with the following command:
 
+The easiest way to run the program is to navigate to a folder of datasets you want to convert, make  sure
+there is a valid config.json in the top level of that folder and simply call:
+```bash
+python <path to main.py>
 ```
-python main.py
+or
+```bash
+<path to mocap_to_json>
 ```
 
-Running the project with the command above will assume the following defaults:
-- All files to be converted are in the ```RawDatasets``` directory.
-- The configuration file is located in the RawDatasets directory and is named ```config.json```.
-- The output directory is ```RawDatasets/Output```.
+or if you've built the executable and added it to your path call:
+
+```bash
+mocap_to_json
+```
+
+With no options the program will use the user's current working directory as the input folder,
+will assume there is a valid `config.json` in the current working directory (see below for specifications), and will create a folder for the output
+called `ConvertedJsonOutput` in the input folder.
 
 The following optional flags can also be used:
-- ```-gui``` will open the GUI
-  - ```python main.py -gui```  
-- ```-input <path of input directory>``` will specify the input directory to be used, and update the assumption 
-for the configuration file and output directory accordingly.
-  - ```python main.py -input "C:\Users\username\InputDirectory"```
-- ```-config <path of configuration file>``` will specify the configuration file to be used. 
-  - ```python main.py -config "C:\Users\username\InputDirectory\config.json"```
-- ```-output <path of output directory>``` will specify the output directory to be used.
-  - ```python main.py -output "C:\Users\username\OutputDirectory"```
+- `--gui` will open the GUI. If the `--gui` flag is present all other arguments will be ignored.
+  - `python main.py --gui`  
+- `--input <path of input file or directory>` will specify the input file or directory to be used. If the `--input` is a directory the default config file will be set to `<input dir>/config.json` and the default output directory will be set to `<input dir>/ConvertedJsonOutput/`.
+  - `python main.py --input "C:\Users\username\InputDirectory"`
+- `--config <path of configuration file>` will specify the configuration file to be used. 
+  - `python main.py --config "C:\Users\username\InputDirectory\config.json"`
+- `--output <path of output directory>` will specify the output directory to be used.
+  - `python main.py --output "C:\Users\username\OutputDirectory"`
   
 These optional flags can be used together:  
 ```python main.py -input "C:\Users\username\InputDirectory" -config "C:\Users\username\InputDirectory\config.json" -output "C:\Users\username\OutputDirectory"```

@@ -31,8 +31,12 @@ Tkinter:
 pyinstaller:
 	pip install pyinstaller
 
-exe: pyinstaller dependencies
-	pyinstaller --onefile src/main.py
-
 bvhtoolbox:
 	pip install bvhtoolbox
+
+exe: pyinstaller dependencies
+	pyinstaller --onefile src/main.py -n mocap_to_json
+
+exe-quick:
+	pyinstaller --onefile src/main.py -n mocap_to_json
+
