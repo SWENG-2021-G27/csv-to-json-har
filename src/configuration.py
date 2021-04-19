@@ -30,117 +30,117 @@ class Configuration:
         "FileExtension": ".csv",
         "Joints": {  # These are the order of the joints in the file
             "Head": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "Neck": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "LeftShoulder": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "RightShoulder": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "LeftElbow": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "RightElbow": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "LeftWrist": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "RightWrist": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "LeftHand": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "RightHand": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "TopSpine": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "MidSpine": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "BaseSpine": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "LeftHip": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "RightHip": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "LeftKnee": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "RightKnee": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "LeftFoot": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
             "RightFoot": {
-                "x": -1,
-                "y": -1,
-                "z": -1,
+                "x-column": -1,
+                "y-column": -1,
+                "z-column": -1,
                 "status": 0
             },
         }
