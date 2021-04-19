@@ -344,7 +344,10 @@ gui = App()
 
 def start_gui():
     # created an app icon
-    gui.tk.call('wm', 'iconphoto', gui, tk.PhotoImage(file='GUIicon.png'))
+    try:
+      gui.tk.call('wm', 'iconphoto', gui, tk.PhotoImage(file='GUIicon.png'))
+    except Exception as e:
+      print("\n\t[WARNING]: " + str(e) + "\n\tGUI icon is only avaibable if you use run_gui.py, or if you are in the src or dist folders.")
     # added to keep all text on screen at all times
     gui.resizable(False, False)
     gui.mainloop()
