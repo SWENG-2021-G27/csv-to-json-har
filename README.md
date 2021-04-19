@@ -1,11 +1,13 @@
 # csv-to-json-har
 
 ### Prerequisites
-To run this project, you need the following installed on your machine:
+To follow this installation guide you should have the following:
+- A terminal emulator and command line shell (e.g. PowerShell, Bash)
 - Python 3
 - GNU Make
+- A connection to the internet
 
-Other dependencies are listed in the Makefile.
+Other dependencies are listed in the Makefile but you don't need to know about them to use the software.
 
 ### Installation
 
@@ -55,10 +57,13 @@ or if you've built the executable and added it to your path call:
 mocap_to_json
 ```
 
-With no options the program will use the user's current working directory as the input folder,
-will assume there is a valid `config.json` in the current working directory (see below for specifications), and will create a folder for the output
+With no options the program will
+- use the user's current working directory as the input folder,
+- assume there is a valid `config.json` in the current working directory (see below for specifications), and
+- create a folder for the output
 called `ConvertedJsonOutput` in the input folder.
 
+### Command Line Options
 The following optional flags can also be used:
 - `--gui` will open the GUI. If the `--gui` flag is present all other arguments will be ignored.
   - `python main.py --gui`  
