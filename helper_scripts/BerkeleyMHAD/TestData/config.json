@@ -17,117 +17,117 @@
     },
     "Joints": {
         "Head": {
-            "x": 16,
-            "y": 17,
-            "z": 18,
+            "x-column": 16,
+            "y-column": 17,
+            "z-column": 18,
             "status": 1
         },
         "Neck": {
-            "x": 13,
-            "y": 14,
-            "z": 15,
+            "x-column": 13,
+            "y-column": 14,
+            "z-column": 15,
             "status": 1
         },
         "LeftShoulder": {
-            "x": 40,
-            "y": 41,
-            "z": 42,
+            "x-column": 40,
+            "y-column": 41,
+            "z-column": 42,
             "status": 1
         },
         "RightShoulder": {
-            "x": 22,
-            "y": 23,
-            "z": 24,
+            "x-column": 22,
+            "y-column": 23,
+            "z-column": 24,
             "status": 1
         },
         "LeftElbow": {
-            "x": 46,
-            "y": 47,
-            "z": 48,
+            "x-column": 46,
+            "y-column": 47,
+            "z-column": 48,
             "status": 1
         },
         "RightElbow": {
-            "x": 28,
-            "y": 29,
-            "z": 30,
+            "x-column": 28,
+            "y-column": 29,
+            "z-column": 30,
             "status": 1
         },
         "LeftWrist": {
-            "x": 52,
-            "y": 53,
-            "z": 54,
+            "x-column": 52,
+            "y-column": 53,
+            "z-column": 54,
             "status": 1
         },
         "RightWrist": {
-            "x": 34,
-            "y": 35,
-            "z": 36,
+            "x-column": 34,
+            "y-column": 35,
+            "z-column": 36,
             "status": 1
         },
         "LeftHand": {
-            "x": 52,
-            "y": 53,
-            "z": 54,
+            "x-column": 52,
+            "y-column": 53,
+            "z-column": 54,
             "status": 1
         },
         "RightHand": {
-            "x": 34,
-            "y": 35,
-            "z": 36,
+            "x-column": 34,
+            "y-column": 35,
+            "z-column": 36,
             "status": 1
         },
         "TopSpine": {
-            "x": 10,
-            "y": 11,
-            "z": 12,
+            "x-column": 10,
+            "y-column": 11,
+            "z-column": 12,
             "status": 1
         },
         "MidSpine": {
-            "x": 7,
-            "y": 8,
-            "z": 9,
+            "x-column": 7,
+            "y-column": 8,
+            "z-column": 9,
             "status": 1
         },
         "BaseSpine": {
-            "x": 4,
-            "y": 5,
-            "z": 6,
+            "x-column": 4,
+            "y-column": 5,
+            "z-column": 6,
             "status": 1
         },
         "LeftHip": {
-            "x": 73,
-            "y": 74,
-            "z": 75,
+            "x-column": 73,
+            "y-column": 74,
+            "z-column": 75,
             "status": 1
         },
         "RightHip": {
-            "x": 55,
-            "y": 56,
-            "z": 57,
+            "x-column": 55,
+            "y-column": 56,
+            "z-column": 57,
             "status": 1
         },
         "LeftKnee": {
-            "x": 79,
-            "y": 80,
-            "z": 81,
+            "x-column": 79,
+            "y-column": 80,
+            "z-column": 81,
             "status": 1
         },
         "RightKnee": {
-            "x": 61,
-            "y": 62,
-            "z": 63,
+            "x-column": 61,
+            "y-column": 62,
+            "z-column": 63,
             "status": 1
         },
         "LeftFoot": {
-            "x": 85,
-            "y": 86,
-            "z": 87,
+            "x-column": 85,
+            "y-column": 86,
+            "z-column": 87,
             "status": 1
         },
         "RightFoot": {
-            "x": 67,
-            "y": 68,
-            "z": 69,
+            "x-column": 67,
+            "y-column": 68,
+            "z-column": 69,
             "status": 1
         }
     }
