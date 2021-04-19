@@ -110,7 +110,8 @@ As of writing this only a limited number of `config.json` files have
 been written and tested. Some of the variables which can be set in 
 the `config.json` are experimental or have not been implemented yet.
 
-Here is a sample config file:
+Here is a sample config file. Note: if the the Structure in the config file is Vertical, then the Joins field must be
+specified. If the Structure in the config file is ntu, then the JointsMap field must be specified.
 ```python
 {
     "Device": 3,                        # Defaults to 3 for other (not kinect) device
