@@ -1,8 +1,6 @@
 {
     "Device": 3,
     "Ground": [0, 1, 0, 0.6],
-    "NumberOfSkeletons": 1,
-    "NumberOfJoints": 19,
     "Structure": "Vertical",
     "StartRow": 1,
     "Frames": {

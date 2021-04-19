@@ -1,8 +1,6 @@
 {
   "Device": 3,
   "Ground": [0, 1, 0, 0.6],
-  "NumberOfSkeletons": 2,
-  "NumberOfJoints": 25,
   "JointXYZAreConsecutive": false,
   "JointXYZOrder" : ["z", "x", "y"],
   "magnify" : {
@@ -12,7 +10,7 @@
     },
   "ColumnSeperator" : "Spaces",
   "Structure": "Vertical",
-  "FileExtensio": ".txt",
+  "FileExtension": ".txt",
   "StartRow": 0,
   "Frames": {
       "FramesInfo": false,
