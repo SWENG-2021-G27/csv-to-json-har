@@ -12,6 +12,7 @@
     },
   "ColumnSeperator" : "Spaces",
   "Structure": "Vertical",
+  "FileExtensio": ".txt",
   "StartRow": 0,
   "Frames": {
       "FramesInfo": false,
