@@ -81,20 +81,20 @@ def convert_vertical(filename, output, c):
             out.write(
              "\\\"p\\\":\\\"(" 
              + str(
-              float(row[c.config["Joints"][joint]["x"]]) * float(c.config["magnify"]["x"])
+              float(row[c.config["Joints"][joint]["x-column"]]) * float(c.config["magnify"]["x"])
               + float(
                 c.config["x-offset"]
               )
              ).strip() + ","
              + str(
-              float(row[c.config["Joints"][joint]["y"]]) * float(c.config["magnify"]["y"])
+              float(row[c.config["Joints"][joint]["y-column"]]) * float(c.config["magnify"]["y"])
               + float(
                 c.config["y-offset"]
               )
              ).strip() + ","
              + str(
               float(
-                row[c.config["Joints"][joint]["z"]]) * float(c.config["magnify"]["z"])
+                row[c.config["Joints"][joint]["z-column"]]) * float(c.config["magnify"]["z"])
                 + float(
                   c.config["z-offset"]
                 )
