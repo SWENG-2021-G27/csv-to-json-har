@@ -344,7 +344,7 @@ gui = App()
 
 def start_gui():
     # created an app icon
-    # gui.tk.call('wm', 'iconphoto', gui.w, tk.PhotoImage(file='GUIicon.png'))
+    gui.tk.call('wm', 'iconphoto', gui.w, tk.PhotoImage(file='GUIicon.png'))
     # added to keep all text on screen at all times
     gui.resizable(False, False)
     gui.mainloop()
