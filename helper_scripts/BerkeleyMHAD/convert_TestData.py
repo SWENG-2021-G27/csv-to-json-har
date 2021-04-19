@@ -5,9 +5,9 @@ colorama.init()
 
 sep = os.path.sep
 
-config_file = os.path.abspath(os.path.join('TestData','config.json'))
+config_file = os.path.abspath(os.path.join('TestData', 'config.json'))
 input_folder = os.path.abspath('TestData')
-output_folder = os.path.abspath('TestOutput')
+output_folder = os.path.abspath('Verified')
 
 os.chdir('..' + sep + '..')
 os.chdir('src')

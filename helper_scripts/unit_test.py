@@ -20,9 +20,9 @@ def test():
     return
   for output in os.listdir('TestOutput'):
     differences = 0
-    if os.path.isfile(os.path.join('Verified',output)): 
+    if os.path.isfile(os.path.join('TestOutput',output)):
       with open(os.path.join('TestOutput',output))as test_file:
-        verified_path = os.path.join('Verified',output) 
+        verified_path = os.path.join('Verified',output)
         if(not os.path.isfile(verified_path)):
           break
         with open(os.path.join('Verified',output)) as verified_file:
@@ -33,7 +33,7 @@ def test():
           for key in test.keys():
             if not test[key] == verified[key]:
               differences += 1
-              print("\t\t" + red("For " + output + " test[" + key + "] is not the same as verified[" + key + "]"))
+              print("\t\t" + red("For " + output + " test[" + key + "] is not the same as TestOutput[" + key + "]"))
           if(differences != 0):
             print('\t\t' + str(differences) + " difference" + plural(differences) + " between TestOutput/" + output + " and Verified/" + output)
             total_differences += differences

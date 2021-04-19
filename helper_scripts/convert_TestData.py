@@ -10,7 +10,7 @@ def convert():
   input_folder = os.path.abspath('TestData')
   output_folder = os.path.abspath('TestOutput')
 
-  exit_code = os.system('python ' + os.path.join(os.pardir,os.pardir,'src','main.py') + ' -c ' + config_file + ' -i ' + input_folder + ' -o ' + output_folder)
+  exit_code = os.system('python ' + os.path.join(os.pardir,os.pardir,'src','main.py') + ' -c \"' + config_file + '\" -i \"' + input_folder + '\" -o \"' + output_folder + "\"")
 
   if(exit_code ==  0):
     print( colorama.Fore.GREEN )
