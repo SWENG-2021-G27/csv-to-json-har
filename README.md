@@ -128,9 +128,9 @@ specified. If the Structure in the config file is ntu, then the JointsMap field 
     "y-offset": 0,                      # Defaults to 0 for no y offset
     "z-offset": 0,                      # Defaults to 0 for no z offset
     "magnify": {
-        "x": 5,                         # Defaults to 1 for a skeleton of the same size as the data (2 would give a skeleton twice as large)
-        "y": 5,                         # Defaults to 1 for a skeleton of the same size as the data (2 would give a skeleton twice as large)
-        "z": 5                          # Defaults to 1 for a skeleton of the same size as the data (2 would give a skeleton twice as large)
+        "x": 1,                         # Defaults to 1 for a skeleton of the same size as the data (2 would give a skeleton twice as large)
+        "y": 1,                         # Defaults to 1 for a skeleton of the same size as the data (2 would give a skeleton twice as large)
+        "z": 1                          # Defaults to 1 for a skeleton of the same size as the data (2 would give a skeleton twice as large)
     },
     "FileExtension": ".csv",            # Defaults to ".csv" for a csv file
     
