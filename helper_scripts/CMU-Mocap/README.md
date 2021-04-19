@@ -4,11 +4,12 @@
 This folder has the following structure:
 ````
 CMU-Mocap
-|- config.json
+|- TestData
+| |- config.json
 |- download.py
 |- bvh_to_csv.py
 ````
-`config.json` is a configuration file that can be used to convert the CMU Motion Capture Dataset into a series of 
+`TestData/config.json` is a configuration file that can be used to convert the CMU Motion Capture Dataset into a series of 
 appropriate JSON files for animation using the conversion application.
 
 `download.py` is a python script that will download the CMU Motion Capture Dataset into a new folder in the `./RawDatasets` 
