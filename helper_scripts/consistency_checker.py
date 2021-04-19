@@ -1,5 +1,6 @@
 import unit_test
 import os
+import convert_TestData
 from colors import *
 
 
@@ -8,5 +9,6 @@ if __name__ == "__main__":
   if(os.path.isdir(dir) and dir != "__pycache__"):
     print(blue(dir))
     os.chdir(dir)
+    convert_TestData.convert() 
     unit_test.test()
     os.chdir('..')
