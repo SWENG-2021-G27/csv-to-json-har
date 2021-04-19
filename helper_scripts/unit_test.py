@@ -26,7 +26,7 @@ def test():
         if(not os.path.isfile(verified_path)):
           break
         with open(os.path.join('Verified',output)) as verified_file:
-          print(dim("\tcomparing TestOutput/" + output + " and Verified/" + output))
+          print(dim("\tcomparing " + output))
           number_of_files_compared += 1
           test = json.load(test_file)
           verified = json.load(verified_file)

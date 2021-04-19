@@ -18,133 +18,133 @@
   },
   "Joints": { 
       "Head": {
-          "status": 2,
+          "status": 1,
           "n": 3,
           "z-column": 8,
           "x-column": 9,
           "y-column": 10
       },
       "Neck": {
-          "status": 2,
+          "status": 1,
           "n": 2,
           "z-column": 5,
           "x-column": 6,
           "y-column": 7
       },
       "LeftShoulder": {
-          "status": 2,
+          "status": 1,
           "n": 4,
           "z-column": 11,
           "x-column": 12,
           "y-column": 13
       },
       "RightShoulder": {
-          "status": 2,
+          "status": 1,
           "n": 8,
           "z-column": 23,
           "x-column": 24,
           "y-column": 25
       },
       "LeftElbow": {
-          "status": 2,
+          "status": 1,
           "n": 5,
           "z-column": 14,
           "x-column": 15,
           "y-column": 16
       },
       "RightElbow": {
-          "status": 2,
+          "status": 1,
           "n": 9,
           "z-column": 26,
           "x-column": 27,
           "y-column": 28
       },
       "LeftWrist": {
-          "status": 2,
+          "status": 1,
           "n": 7,
           "z-column": 20,
           "x-column": 21,
           "y-column": 22
       },
       "RightWrist": {
-          "status": 2,
+          "status": 1,
           "n": 11,
           "z-column": 32,
           "x-column": 33,
           "y-column": 34
       },
       "LeftHand": {
-          "status": 2,
+          "status": 1,
           "n": 6,
           "z-column": 17,
           "x-column": 18,
           "y-column": 19
       },
       "RightHand": {
-          "status": 2,
+          "status": 1,
           "n": 10,
           "z-column": 29,
           "x-column": 30,
           "y-column": 31
       },
       "TopSpine": {
-          "status": 2,
+          "status": 1,
           "n": 20,
           "z-column": 59,
           "x-column": 60,
           "y-column": 61
       },
       "MidSpine": {
-          "status": 2,
+          "status": 1,
           "n": 1,
           "z-column": 2,
           "x-column": 3,
           "y-column": 4
       },
       "BaseSpine": {
-          "status": 2,
+          "status": 1,
           "n": 0,
           "x-column": 0,
           "y-column": 1,
           "z-column": 2
       },
       "LeftHip": {
-          "status": 2,
+          "status": 1,
           "n": 12,
           "z-column": 35,
           "x-column": 36,
           "y-column": 37
       },
       "RightHip": {
-          "status": 2,
+          "status": 1,
           "n": 16,
           "z-column": 47,
           "x-column": 48,
           "y-column": 49
       },
       "LeftKnee": {
-          "status": 2,
+          "status": 1,
           "n": 13,
           "z-column": 38,
           "x-column": 39,
           "y-column": 40
       },
       "RightKnee": {
-          "status": 2,
+          "status": 1,
           "n": 17,
           "z-column": 50,
           "x-column": 51,
           "y-column": 52
       },
       "LeftFoot": {
-          "status": 2,
+          "status": 1,
           "n": 14,
           "z-column": 41,
           "x-column": 42,
           "y-column": 43
       },
       "RightFoot": {
-          "status": 2,
+          "status": 1,
           "n": 18,
           "z-column": 53,
           "x-column": 54,
