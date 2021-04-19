@@ -104,10 +104,174 @@ python main.py --input "C:\Users\username\InputDirectory" --config "C:\Users\use
 ## Config specification
 
 The program attempts to convert files in the input folder according to
-the configuration specified in `config.json`.
+the configuration specified in a configuration file: `config.json`.
 
 As of writing this only a limited number of `config.json` files have
 been written and tested. Some of the variables which can be set in 
 the `config.json` are experimental or have not been implemented yet.
 
-The bleeding list of variables that can be given in the `config.json` can be seen in `src/configuration.py`.
+Here is a sample config file:
+```python
+{
+    "Device": 3,                        # Defaults to 3 for other (not kinect) device
+    "Ground": (0, 1, 0, 0.6),           # Defaults to (0, 1, 0 , 0.6) for ground
+    "Offset": 0,                        # Defaults to 0 for offset
+    "Structure": "Vertical",            # Defaults to each joint having three columns (one column for each x, y, z)
+    "ColumnSeperator": "Comma",         # Defaults to ',' as a delimiter, use "Spaces" for ' '
+    "StartRow": 0,                      # Defaults to 0 for the first row with skeletal data
+    "Frames": {
+        "FramesInfo": False,            # Defaults to false for no timing data being present
+        "FrameIdx": -1                  # This field specifies the column of the timing data in the file if it is present
+    },
+    "x-offset": 0,                      # Defaults to 0 for no x offset
+    "y-offset": 0,                      # Defaults to 0 for no y offset
+    "z-offset": 0,                      # Defaults to 0 for no z offset
+    "magnify": {
+        "x": 5,                         # Defaults to 1 for a skeleton of the same size as the data (2 would give a skeleton twice as large)
+        "y": 5,                         # Defaults to 1 for a skeleton of the same size as the data (2 would give a skeleton twice as large)
+        "z": 5                          # Defaults to 1 for a skeleton of the same size as the data (2 would give a skeleton twice as large)
+    },
+    "FileExtension": ".csv",            # Defaults to ".csv" for a csv file
+    
+
+    "Joints": {                         # If Structure is Vertical, the Joints field must be specified     
+        "Head": {
+            "x": -1,                    # Specifies the column of the x index for the head
+            "y": -1,                    # Specifies the column of the y index for the head
+            "z": -1,                    # Specifies the column of the z index for the head
+            "status": 1                 # Specifies the status of the tracking (0 = untracked, 1 = tracked with low confidence, 2 = tracked)
+        },
+        "Neck": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "LeftShoulder": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "RightShoulder": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "LeftElbow": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "RightElbow": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "LeftWrist": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "RightWrist": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "LeftHand": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "RightHand": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "TopSpine": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "MidSpine": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "BaseSpine": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "LeftHip": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "RightHip": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "LeftKnee": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "RightKnee": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "LeftFoot": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+        "RightFoot": {
+            "x": -1,
+            "y": -1,
+            "z": -1,
+            "status": 1
+        },
+    },
+
+
+    "JointMap": {                         # If Structure is NTU, the JointsMap field must be specified                                 
+        "Head": -1,                       # Specifies the order of the head joint
+        "Neck": -1,                       # Specifies the order of the neck joint
+        "LeftShoulder": -1,               # Specifies the order of the left shoulder joint, etc.
+        "RightShoulder": -1,
+        "LeftElbow": -1,
+        "RightElbow": -1,
+        "LeftWrist": -1,
+        "RightWrist": -1,
+        "LeftHand": -1,
+        "RightHand": -1,
+        "TopSpine": -1,
+        "MidSpine": -1,
+        "BaseSpine": -1,
+        "LeftHip": -1,
+        "RightHip": -1,
+        "LeftKnee": -1,
+        "RightKnee": -1,
+        "LeftFoot": -1,
+        "RightFoot": -1
+    }
+}
+```

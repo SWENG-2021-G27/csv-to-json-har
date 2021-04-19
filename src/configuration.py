@@ -20,9 +20,9 @@ class Configuration:
         "y-offset": 0,
         "z-offset": 0,
         "magnify": {
-            "x": 5,
-            "y": 5,
-            "z": 5
+            "x": 1,
+            "y": 1,
+            "z": 1
         },
         "FileExtension": ".csv",
         "Joints": {  # These are the order of the joints in the file
