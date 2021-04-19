@@ -201,16 +201,19 @@ def main():
                 options["output_folder"]))
 
     options["output_folder"] = os.path.abspath(options["output_folder"])
-
-    # Convert all csv files in the input directory
-    if x.config["Structure"] == "Vertical":
+    
+    try:
+      # Convert all csv files in the input directory
+      if x.config["Structure"] == "Vertical":
         os.chdir(options["input_path"])
         recursive_convert_vertical('.', options["output_folder"], x)
-    elif x.config["Structure"] == "NTU":
+      elif x.config["Structure"] == "NTU":
         os.chdir(options["input_path"])
         recursive_convert_ntu('.', os.path.abspath(options["output_folder"]), x)
-    else:
+      else:
         error("No Structure provided in config.json. Possible Structure values are: \"Vertical\", \"NTU\"")
+    except Exception as e:
+      error(str(e) + " Sorry, we don't have any more info.")
 
 
 def recursive_convert_vertical(input, output, config):
