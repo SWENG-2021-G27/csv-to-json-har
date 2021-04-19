@@ -1,8 +1,6 @@
 {
   "Device": 3,
   "Ground": [0, 1, 0, 0.6],
-  "NumberOfSkeletons": "variable",
-  "NumberOfJoints": 25,
   "FileExtension": ".skeleton",
   "magnify" : {
       "x" : 100,

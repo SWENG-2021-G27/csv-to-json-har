@@ -9,8 +9,6 @@ class Configuration:
         "Device": 3,  # Default to 3 for other (not kinect) device
         "Ground": (0, 1, 0, 0.6),  # Default to (0, 1, 0 , 0.6) for ground
         "Offset": 0,
-        "NumberOfSkeletons": 1,  # Default to one skeleton per file
-        "NumberOfJoints": 19,  # Default to 19 joints per file (19 joints in the JSON output)
         "Structure": "Vertical",  # Default to joint positions going down
         "ColumnSeperator": "Comma",
         "StartRow": 0,
@@ -26,123 +24,143 @@ class Configuration:
             "y": 5,
             "z": 5
         },
-        "JointMap": None,
         "FileExtension": ".csv",
         "Joints": {  # These are the order of the joints in the file
             "Head": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "Neck": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "LeftShoulder": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "RightShoulder": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "LeftElbow": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "RightElbow": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "LeftWrist": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "RightWrist": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "LeftHand": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "RightHand": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "TopSpine": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "MidSpine": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "BaseSpine": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "LeftHip": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "RightHip": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "LeftKnee": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "RightKnee": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "LeftFoot": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
             "RightFoot": {
                 "x": -1,
                 "y": -1,
                 "z": -1,
-                "status": 0
+                "status": 1
             },
+        },
+        "JointMap": {
+            "Head": -1,
+            "Neck": -1,
+            "LeftShoulder": -1,
+            "RightShoulder": -1,
+            "LeftElbow": -1,
+            "RightElbow": -1,
+            "LeftWrist": -1,
+            "RightWrist": -1,
+            "LeftHand": -1,
+            "RightHand": -1,
+            "TopSpine": -1,
+            "MidSpine": -1,
+            "BaseSpine": -1,
+            "LeftHip": -1,
+            "RightHip": -1,
+            "LeftKnee": -1,
+            "RightKnee": -1,
+            "LeftFoot": -1,
+            "RightFoot": -1
         }
     }
 
@@ -198,4 +216,4 @@ class Configuration:
             self.config["Joints"] = data["Joints"]
 
         if "JointMap" in data:
-            self.config["JointMap"] = data["JointMap"] # TODO set reasonable defaults above or null defaults
+            self.config["JointMap"] = data["JointMap"]
