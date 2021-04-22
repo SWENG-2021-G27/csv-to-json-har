@@ -2,6 +2,7 @@
 
 import json
 import sys
+import ERROR
 
 
 # A configuration class that holds information about the file being converted
@@ -11,7 +12,7 @@ class Configuration:
         "Ground": (0, 1, 0, 0.6),  # Default to (0, 1, 0 , 0.6) for ground
         "Offset": 0,
         "Structure": "Vertical",  # Default to joint positions going down
-        "ColumnSeperator": "Comma",
+        "ColumnSeparator": "Comma",
         "StartRow": 0,
         "Frames": {
             "FramesInfo": False,  # Flag to say if there is timing data in the file
@@ -31,114 +32,133 @@ class Configuration:
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "Neck": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "LeftShoulder": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "RightShoulder": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "LeftElbow": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "RightElbow": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "LeftWrist": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "RightWrist": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "LeftHand": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "RightHand": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "TopSpine": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "MidSpine": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "BaseSpine": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "LeftHip": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "RightHip": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "LeftKnee": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "RightKnee": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "LeftFoot": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
             "RightFoot": {
                 "x-column": -1,
                 "y-column": -1,
                 "z-column": -1,
+                "n": -1,
                 "status": 1
             },
         },
@@ -172,19 +192,22 @@ class Configuration:
     def render_path_rec(self,prefix):
       try:
         key = prefix[0]
-        return "\"" + key + "\":{" + self.render_path_rec(prefix[1:]) + "}"
+        return "\"" + key + "\":" + self.render_path_rec(prefix[1:])
       except:
-        return "value"
+        return "<value>"
 
-    
-    def recursive_load(self, path_so_far,data, target):
-      print(str(path_so_far))
+    def load(self, data):
+      for key in data.keys():
+        self.recursive_load([key], data[key], self.config, key)
+
+ 
+    def recursive_load(self, path_so_far,data, target, key):
       if isinstance(data, dict):
         for k in data.keys():
           backup_path = path_so_far.copy()
-          if k in target:
+          if k in target[key]:
             path_so_far.append(k)
-            self.recursive_load(path_so_far,data[k],target[k])
+            self.recursive_load(path_so_far,data[k],target[key], k)
           else:
             backup_path = path_so_far.copy()
             path_so_far.append(k)
@@ -192,9 +215,10 @@ class Configuration:
             path_so_far = backup_path
           path_so_far = backup_path
       else:
-        print("Setting " + self.render_path(path_so_far) + " to " + str(data))
-        target = data
-      
+        target[key] = data
+        print( self.render_path(path_so_far) + " is now " + str(target[key]))  
+    def set(self,path,value):
+      self.config 
 
     def __init__(self, input_file):
         with open(input_file) as f:
@@ -203,9 +227,24 @@ class Configuration:
           except Exception as e:
             print("Exception raised while loading json data: " +str(e) + " Aborting.")
             sys.exit(-1)
+   
 
-        self.recursive_load([], data, self.config) 
+        self.load(data)
+        """
+        #                   array of keys starts as an empty list and is appended for deeply nested dicts
+                            [], 
+    
+        #                   data loaded for 
+                            data,
 
+        #                   target to load data into
+                            self.config,
+        
+        #                   current key to load into, starts as None
+                            None) 
+        """
+
+        print("Using the following configuration:\n" + str(self.config))
 
         # THE OLD WAY
         """

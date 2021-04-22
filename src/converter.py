@@ -3,6 +3,7 @@
 
 import csv
 import os
+import ERROR
 
 
 # A function that returns "In CLI". This function is called in main.py to signify that the GUI has not been started.
@@ -41,7 +42,7 @@ def convert_vertical(filename, output, c):
     try:
       out = open(output, "w")
     except Exception as e:
-      print("ERROR while trying to open " + output + " for output: " + str(e))
+      ERROR.error("while trying to open " + output + " for output: " + str(e))
       return
     out.write("{\"d\":" + str(c.config["Device"]) + ","
               + "\"g\":\"(" + str(c.config["Ground"][0]) + "," + str(c.config["Ground"][1]) + "," + str(
@@ -49,7 +50,8 @@ def convert_vertical(filename, output, c):
               + "\"o\":\"" + str(c.config["Offset"]) + "\","
               + "\"t\":\"{\\\"Items\\\":[")
     
-    if(c.config["ColumnSeperator"] == "Spaces"):
+    print("ColumnSeparator is " + c.config["ColumnSeparator"] )
+    if(c.config["ColumnSeparator"] == "Spaces"):
       column_separator = None # the default separator for str.split() is any whitespace so we can use the default
     else: # default column separator is comma
       column_separator = ','
@@ -60,7 +62,11 @@ def convert_vertical(filename, output, c):
       row_idx = 0
       frame = 0
       for line in f:
-        row = line.split(column_separator)
+        try:
+          row = line.split(column_separator)
+        except Exception as e:
+          ERROR.error("While trying to split line: \"" + line + "\" into an array with column separator: " + str(column_separator) + "\n\tAborting conversion of this file: " + filename)
+          return
         if row_idx > c.config["StartRow"]:
           # Write the frame field
           if frame > 0:
@@ -139,7 +145,7 @@ def convert_ntu(filename, output, c):
               + "\"o\":\"" + str(c.config["Offset"]) + "\","
               + "\"t\":\"{\\\"Items\\\":[")
     
-    if(c.config["ColumnSeperator"] == "Spaces"):
+    if(c.config["ColumnSeparator"] == "Spaces"):
       column_separator = None # the default separator for str.split() is any whitespace so we can use the default
     else: # default column separator is comma
       column_separator = ','

@@ -17,7 +17,7 @@ def test():
   number_of_files_compared = 0
   if(not os.path.isdir('TestOutput')):
     print(red("\tNo TestOutput folder in " + os.getcwd()))
-    return
+    return os.path.basename(os.getcwd())
   for output in os.listdir('TestOutput'):
     differences = 0
     if os.path.isfile(os.path.join('TestOutput',output)):
@@ -44,9 +44,12 @@ def test():
           except Exception as e:
             print("Exception raised while comparing " + output + ": " + str(e))
             total_differences += 1
+    
 
 
   if(total_differences == 0):
     print(green("\tPerfect, no differences between TestOutput and Verified."))
+    return None
   else:
     print("\t" + red(str(total_differences) + " difference") + plural(total_differences) + " found in total.")
+    return os.path.basename(os.getcwd())

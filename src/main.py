@@ -217,18 +217,21 @@ def execute():
       error(str(e) + " Single File, Sorry, we don't have any more info.")
     
     else: # We assume
-     try:
       # Convert all csv files in the input directory
       if x.config["Structure"] == "Vertical":
-        os.chdir(options["input_path"])
-        recursive_convert_vertical('.', options["output_folder"], x)
+        try:
+          os.chdir(options["input_path"])
+          recursive_convert_vertical('.', options["output_folder"], x)
+        except Exception as e:
+          error(str(e) + " Exception raised when trying to recursively convert (vertical) the folder " + options["input_path"])
       elif x.config["Structure"] == "NTU":
-        os.chdir(options["input_path"])
-        recursive_convert_ntu('.', os.path.abspath(options["output_folder"]), x)
+        try:
+          os.chdir(options["input_path"])
+          recursive_convert_ntu('.', os.path.abspath(options["output_folder"]), x)
+        except Exception as e:
+          error(str(e) + " Exception raised when trying to recursively convert (ntu) the folder " + options["input_path"])
       else:
         error("No Structure provided in config.json. Possible Structure values are: \"Vertical\", \"NTU\"")
-     except Exception as e:
-      error(str(e) + " Exception raised in Recursive Conversion, Sorry, we don't have any more info.")
 
 
 def recursive_convert_vertical(input, output, config):
