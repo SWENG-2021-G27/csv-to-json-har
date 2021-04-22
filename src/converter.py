@@ -50,7 +50,6 @@ def convert_vertical(filename, output, c):
               + "\"o\":\"" + str(c.config["Offset"]) + "\","
               + "\"t\":\"{\\\"Items\\\":[")
     
-    print("ColumnSeparator is " + c.config["ColumnSeparator"] )
     if(c.config["ColumnSeparator"] == "Spaces"):
       column_separator = None # the default separator for str.split() is any whitespace so we can use the default
     else: # default column separator is comma
