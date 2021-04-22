@@ -12,8 +12,7 @@ import colorama
 # This makes the coloring cross platform
 colorama.init()
 
-# Use "<dir>" + sep + "<dir>"  instead of <dir>\\<dir> or <dir>/<dir> for building paths to make it cross-platform
-sep = os.path.sep
+# Use os.path.join("<dir>","<dir>",...) instead of <dir>\\<dir> or <dir>/<dir> for building paths to make it cross-platform
 
 # WARNING the current working directory is determined by where the program is called from not where the program is.
 # If the user is not in the src directory when the program is called, the relative paths will not work
@@ -27,7 +26,7 @@ user_working_directory = os.getcwd()
 
 def warn(warning):
     # warning in yellow
-    print("\n\t" + colorama.Fore.YELLOW + "[WARNING]: " + colorama.Style.RESET_ALL + warning)
+    print("\n\t" + colorama.Fore.YELLOW + "[WARNING]: " + colorama.Style.RESET_ALL + warning + "\n")
 
 
 def error(error_msg):
@@ -274,7 +273,7 @@ if __name__ == "__main__":
     path_to_src_as_list = path_to_src.split(sep) # separator=sep i.e. '/' on posix or '\\' on windows
     path_to_src_as_list[len(path_to_src_as_list) -1] = '.'
     for directory in path_to_src_as_list:
-    os.chdir(directory)
+      os.chdir(directory)
     print("Current working directory is now: " + os.getcwd())
     """
     main()
