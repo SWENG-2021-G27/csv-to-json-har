@@ -1,6 +1,7 @@
 # configuration.py
 
 import json
+import sys
 
 
 # A configuration class that holds information about the file being converted
@@ -163,11 +164,51 @@ class Configuration:
             "RightFoot": -1
         }
     }
+    
+
+    def render_path(self,prefix):
+      return self.render_path_rec(prefix)
+    
+    def render_path_rec(self,prefix):
+      try:
+        key = prefix[0]
+        return "\"" + key + "\":{" + self.render_path_rec(prefix[1:]) + "}"
+      except:
+        return "value"
+
+    
+    def recursive_load(self, path_so_far,data, target):
+      print(str(path_so_far))
+      if isinstance(data, dict):
+        for k in data.keys():
+          backup_path = path_so_far.copy()
+          if k in target:
+            path_so_far.append(k)
+            self.recursive_load(path_so_far,data[k],target[k])
+          else:
+            backup_path = path_so_far.copy()
+            path_so_far.append(k)
+            print(self.render_path(path_so_far) + " is not a valid configuration key")
+            path_so_far = backup_path
+          path_so_far = backup_path
+      else:
+        print("Setting " + self.render_path(path_so_far) + " to " + str(data))
+        target = data
+      
 
     def __init__(self, input_file):
         with open(input_file) as f:
+          try:
             data = json.load(f)
+          except Exception as e:
+            print("Exception raised while loading json data: " +str(e) + " Aborting.")
+            sys.exit(-1)
 
+        self.recursive_load([], data, self.config) 
+
+
+        # THE OLD WAY
+        """
         if "Device" in data:
             self.config["Device"] = data["Device"]
 
@@ -217,3 +258,4 @@ class Configuration:
 
         if "JointMap" in data:
             self.config["JointMap"] = data["JointMap"]
+        """

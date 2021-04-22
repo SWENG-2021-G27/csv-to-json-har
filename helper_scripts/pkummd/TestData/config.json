@@ -1,4 +1,6 @@
 {
+  "BadName":1,
+  "Device": { "BadName": 2},
   "Device": 3,
   "Ground": [0, 1, 0, 0.6],
   "JointXYZAreConsecutive": false,

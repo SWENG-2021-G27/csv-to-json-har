@@ -75,8 +75,8 @@ flags = {
 
 # This function will either launch the GUI or operate as a CLI.
 # Functionality is determined by the number of command line arguments.
-def main():
-    # Load in command line arguments
+def parse_options():
+    # copy in command line arguments
     command_line_arguments = sys.argv
 
     global options, extra_options
@@ -87,9 +87,10 @@ def main():
         if len(command_line_arguments) > 2:
             print("Starting GUI and ignoring other command line arguments")
         gui.start_gui()
-        # The GUI and the CLI are not setup to work in tandem, thus for each instance of the program the user can
-        # only start one of them. Therefore end the main function if start the gui
-        return
+        # The GUI and the CLI are not setup to work in tandem,
+        # thus for each instance of the program the user can
+        # only start one of them. Therefore exit after gui closes
+        sys.exit(0)
 
     # If the --input field is present in the command line arguments, update the input directory
     overwriting = None
@@ -171,6 +172,7 @@ def main():
         warn("The following command line arguments were not matched in any pattern and were not loaded: ")
         print(command_line_arguments)
 
+def execute():
     # Are we converting a whole folder or just a single file?
     if os.path.isfile(options["input_path"]):
         extra_options["single_file"] = True
@@ -178,6 +180,7 @@ def main():
         error(blue(options["input_path"]) + " is neither a file nor a folder. Aborting.")
         sys.exit(-1)
 
+    # Load configuration from config file
     try:
         x = configuration.Configuration(options["config_file_path"])
     except OSError as e:
@@ -213,7 +216,7 @@ def main():
      except Exception as e:
       error(str(e) + " Single File, Sorry, we don't have any more info.")
     
-    else:
+    else: # We assume
      try:
       # Convert all csv files in the input directory
       if x.config["Structure"] == "Vertical":
@@ -225,7 +228,7 @@ def main():
       else:
         error("No Structure provided in config.json. Possible Structure values are: \"Vertical\", \"NTU\"")
      except Exception as e:
-      error(str(e) + " Recursive Conversion, Sorry, we don't have any more info.")
+      error(str(e) + " Exception raised in Recursive Conversion, Sorry, we don't have any more info.")
 
 
 def recursive_convert_vertical(input, output, config):
@@ -276,5 +279,7 @@ if __name__ == "__main__":
       os.chdir(directory)
     print("Current working directory is now: " + os.getcwd())
     """
-    main()
-    print(colorama.Fore.GREEN + "\n\tFinished!" + colorama.Style.RESET_ALL)
+    parse_options()
+    execute()
+    nice_msg("Finished!")
+    sys.exit(0)
