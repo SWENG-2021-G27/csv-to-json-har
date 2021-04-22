@@ -227,76 +227,7 @@ class Configuration:
           try:
             data = json.load(f)
           except Exception as e:
-            print("Exception raised while loading json data: " + str(e) + " Aborting.")
+            ERROR.error("Exception raised while loading json data: " + str(e) + ": Aborting.")
             sys.exit(-1)
-   
 
         self.load(data)
-        """
-        #                   array of keys starts as an empty list and is appended for deeply nested dicts
-                            [], 
-    
-        #                   data loaded for 
-                            data,
-
-        #                   target to load data into
-                            self.config,
-        
-        #                   current key to load into, starts as None
-                            None) 
-        """
-
-        print("Using the following configuration:\n" + str(self.config))
-
-        # THE OLD WAY
-        """
-        if "Device" in data:
-            self.config["Device"] = data["Device"]
-
-        if "Ground" in data:
-            self.config["Ground"] = data["Ground"]
-
-        if "NumberOfSkeletons" in data:
-            self.config["NumberOfSkeletons"] = data["NumberOfSkeletons"]
-
-        if "NumberOfJoints" in data:
-            self.config["NumberOfJoints"] = data["NumberOfJoints"]
-
-        if "Structure" in data:
-            self.config["Structure"] = data["Structure"]
-
-        if "ColumnSeperator" in data:
-            self.config["ColumnSeperator"] = data["ColumnSeperator"]
-
-        if "StartRow" in data:
-            self.config["StartRow"] = data["StartRow"]
-
-        if "Offset" in data:
-            self.config["Offset"] = data["Offset"]
-
-        if "Frames" in data:
-            if data["Frames"]["FramesInfo"]:
-                self.config["Frames"]["FramesInfo"] = True
-                self.config["Frames"]["FrameIdx"] = data["Frames"]["FrameIdx"]
-
-        if "x-offset" in data:
-            self.config["x-offset"] = data["x-offset"]
-
-        if "y-offset" in data:
-            self.config["y-offset"] = data["y-offset"]
-
-        if "z-offset" in data:
-            self.config["z-offset"] = data["z-offset"]
-
-        if "magnify" in data:
-            self.config["magnify"] = data["magnify"]
-
-        if "FileExtension" in data:
-            self.config["FileExtension"] = data["FileExtension"]
-
-        if "Joints" in data:
-            self.config["Joints"] = data["Joints"]
-
-        if "JointMap" in data:
-            self.config["JointMap"] = data["JointMap"]
-        """
