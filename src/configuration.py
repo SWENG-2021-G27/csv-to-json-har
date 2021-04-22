@@ -205,18 +205,20 @@ class Configuration:
       if isinstance(data, dict):
         for k in data.keys():
           backup_path = path_so_far.copy()
-          if k in target[key]:
+          if key in target:
             path_so_far.append(k)
             self.recursive_load(path_so_far,data[k],target[key], k)
           else:
             backup_path = path_so_far.copy()
             path_so_far.append(k)
-            print(self.render_path(path_so_far) + " is not a valid configuration key")
+            ERROR.warn(self.render_path(path_so_far) + " is not a valid configuration key.")
             path_so_far = backup_path
           path_so_far = backup_path
       else:
-        target[key] = data
-        print( self.render_path(path_so_far) + " is now " + str(target[key]))  
+        if key in target:
+          target[key] = data
+        else:
+          ERROR.warn( self.render_path(path_so_far) + " is not a valid configuratoin key.")
     def set(self,path,value):
       self.config 
 
@@ -225,7 +227,7 @@ class Configuration:
           try:
             data = json.load(f)
           except Exception as e:
-            print("Exception raised while loading json data: " +str(e) + " Aborting.")
+            print("Exception raised while loading json data: " + str(e) + " Aborting.")
             sys.exit(-1)
    
 
