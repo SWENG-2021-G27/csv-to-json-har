@@ -17,4 +17,8 @@ if __name__ == "__main__":
     if(status != None):
       failed.append(status)
     os.chdir('..')
- print("These folders failed the consistency check: " + red(str(failed)))
+ if (len(failed) > 0):
+  print("These folders failed the consistency check: " + red(str(failed)))
+ else:
+   print(bright(green("All folders passed the consistency check.")))
+

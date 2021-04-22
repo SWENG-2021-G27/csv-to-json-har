@@ -14,4 +14,5 @@ def green(msg):
 def dim(msg):
   return colorama.Style.DIM + msg + colorama.Style.RESET_ALL
 
-
+def bright(msg):
+  return colorama.Style.BRIGHT + msg + colorama.Style.RESET_ALL

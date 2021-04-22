@@ -1,5 +1,4 @@
 {
-  "BadName":1,
   "Device": 3,
   "Ground": [0, 1, 0, 0.6],
   "magnify" : {
