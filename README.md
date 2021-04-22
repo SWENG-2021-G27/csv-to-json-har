@@ -49,6 +49,11 @@ mocap_to_json
 
 You can change the name of the executable to whatever you'd like.
 
+### CAUTION
+The program is not set up to handle directories containing symbolic links, or 
+directory paths that contain spaces. Behaviour is not defined for directories
+with spaces in their name.
+
 ### Running the Project
 
 #### Running the GUI
