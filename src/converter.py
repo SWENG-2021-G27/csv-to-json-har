@@ -33,8 +33,16 @@ joint_order = ["Head",
 
 # A function which converts a vertically aligned csv to the strict json required
 def convert_vertical(filename, output, c):
+    
+    if (os.path.isdir(output)):
+      base = os.path.splitext(os.path.basename(filename))[0]
+      output = output + base + ".json"
     # Open the output file in write mode and write the header fields of the json
-    out = open(output, "w")
+    try:
+      out = open(output, "w")
+    except Exception as e:
+      print("ERROR while trying to open " + output + " for output: " + str(e))
+      return
     out.write("{\"d\":" + str(c.config["Device"]) + ","
               + "\"g\":\"(" + str(c.config["Ground"][0]) + "," + str(c.config["Ground"][1]) + "," + str(
         c.config["Ground"][2]) + "," + str(c.config["Ground"][3]) + ")\","
