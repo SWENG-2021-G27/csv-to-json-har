@@ -164,9 +164,19 @@ class ConfigurationPage(tk.Frame):
                 self.error_message.set("  " + folder[0:50] + "... is not valid a folder  ")
 
     def move_on(self):
+        self.error.config(background="white", foreground="black")
         global config
         global input_folder
         global output_folder
+
+        if self.error_message.get() != "":
+            return
+
+        if self.file_var.get() == "" or self.folder_var.get() == "" or self.output_var.get() == "":
+            self.error.config(background="indian red", foreground="black")
+            self.error_message.set("  You have not specified all the fields!  ")
+            return
+
         config = self.file_var.get()
         input_folder = self.folder_var.get()
         output_folder = self.output_var.get()
