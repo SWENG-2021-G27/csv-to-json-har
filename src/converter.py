@@ -3,6 +3,7 @@
 
 import csv
 import os
+import ERROR
 
 
 # A function that returns "In CLI". This function is called in main.py to signify that the GUI has not been started.
@@ -41,7 +42,7 @@ def convert_vertical(filename, output, c):
     try:
       out = open(output, "w")
     except Exception as e:
-      print("ERROR while trying to open " + output + " for output: " + str(e))
+      ERROR.error("while trying to open " + output + " for output: " + str(e))
       return
     out.write("{\"d\":" + str(c.config["Device"]) + ","
               + "\"g\":\"(" + str(c.config["Ground"][0]) + "," + str(c.config["Ground"][1]) + "," + str(
@@ -49,10 +50,12 @@ def convert_vertical(filename, output, c):
               + "\"o\":\"" + str(c.config["Offset"]) + "\","
               + "\"t\":\"{\\\"Items\\\":[")
     
-    if(c.config["ColumnSeperator"] == "Spaces"):
+    if(c.config["ColumnSeparator"] == "Spaces"):
       column_separator = None # the default separator for str.split() is any whitespace so we can use the default
-    else: # default column separator is comma
+    elif (c.config["ColumnSeparator"] == "Comma"):
       column_separator = ','
+    else: # default column separator is comma
+      column_separator = c.config["ColumnSeparator"]
     
    
     # Read every row of the csv (or other filetype) and process the data accordingly
@@ -60,7 +63,11 @@ def convert_vertical(filename, output, c):
       row_idx = 0
       frame = 0
       for line in f:
-        row = line.split(column_separator)
+        try:
+          row = line.split(column_separator)
+        except Exception as e:
+          ERROR.error("While trying to split line: \"" + line + "\" into an array with column separator: " + str(column_separator) + "\n\tAborting conversion of this file: " + filename)
+          return
         if row_idx > c.config["StartRow"]:
           # Write the frame field
           if frame > 0:
@@ -86,7 +93,8 @@ def convert_vertical(filename, output, c):
 
           for joint in joint_order:
             out.write("{\\\"s\\\":" + str(c.config["Joints"][joint]["status"]).strip() + ",")
-            out.write(
+            try:
+             out.write(
              "\\\"p\\\":\\\"(" 
              + str(
               float(row[c.config["Joints"][joint]["x-column"]]) * float(c.config["magnify"]["x"])
@@ -108,7 +116,9 @@ def convert_vertical(filename, output, c):
                 )
              ).strip()
              + ")\\\","
-            )
+             )
+            except Exception as e:
+              ERROR.warn("Exception raised: " + str(e) + ": for joint: " + joint + " in frame: " + str(frame) + " for file: " + filename) 
             out.write("\\\"q\\\":\\\"(0,0)\\\",")
             out.write("\\\"o\\\":\\\"(0,0,0,0)\\\"}")
             if joint != joint_order[len(joint_order) - 1]:
@@ -132,14 +142,22 @@ def convert_ntu(filename, output, c):
     body_id_and_file = {}
   
     # Open the output file in write mode and write the header fields of the json
-    out = open(output, "w")
+    if os.path.isfile(output):
+      out = open(output, "w")
+    elif os.path.isdir(output):
+      base = os.path.slitext(os.path.basename(filename))
+      output = os.path.join(output, base + ".json")
+      try:
+        out = open(output, "w")
+      except Exception as e:
+        ERROR.warn("Failed to open file for writing: " + output + "\n\tAborting conversion of " + filename)
     out.write("{\"d\":" + str(c.config["Device"]) + ","
               + "\"g\":\"(" + str(c.config["Ground"][0]) + "," + str(c.config["Ground"][1]) + "," + str(
         c.config["Ground"][2]) + "," + str(c.config["Ground"][3]) + ")\","
               + "\"o\":\"" + str(c.config["Offset"]) + "\","
               + "\"t\":\"{\\\"Items\\\":[")
     
-    if(c.config["ColumnSeperator"] == "Spaces"):
+    if(c.config["ColumnSeparator"] == "Spaces"):
       column_separator = None # the default separator for str.split() is any whitespace so we can use the default
     else: # default column separator is comma
       column_separator = ','
@@ -187,26 +205,25 @@ def convert_ntu(filename, output, c):
             all_joints.append(joint_info)
 
           for joint in joint_order:
-            ntu_joint = all_joints[int(c.config["JointMap"][joint])]
-            out.write("{\\\"s\\\":" + ntu_joint["trackingState"] + ",")
-            out.write(
-             "\\\"p\\\":\\\"(" 
-             + str(
-              float(ntu_joint["x"]) * float(c.config["magnify"]["x"])
-              + float(
-                c.config["x-offset"]
-              )
-             ).strip() + ","
-             + str(
-              float(ntu_joint["y"]) * float(c.config["magnify"]["y"])+ float(c.config["y-offset"])).strip() + ","
-             + str(
-              float(ntu_joint["z"]) * float(c.config["magnify"]["z"])
-                + float(
-                  c.config["z-offset"]
-                )
-             ).strip()
-             + ")\\\","
-            )
+            try:
+              ntu_joint = all_joints[int(c.config["JointMap"][joint])]
+            except Exception as e:
+              ERROR.warn("Exception getting joint from list of joints: " + str(e) + ": for joint: " + joint + " in frame: " + str(frame) + " for file: " + filename + " in dir: " + os.getcwd()) 
+            try:
+              out.write("{\\\"s\\\":" + ntu_joint["trackingState"] + ",")
+            except Exception as e:
+              ERROR.warn("Exception raised while setting tracking state: " + str(e) + ": for joint: " + joint + " in frame: " + str(frame) + " for file: " + filename + " in dir: " + os.getcwd()) 
+              return
+            try:
+             out.write("\\\"p\\\":\\\"(" 
+             + str(float(ntu_joint["x"]) * float(c.config["magnify"]["x"])
+              + float(c.config["x-offset"])).strip() + ","
+             + str(float(ntu_joint["y"]) * float(c.config["magnify"]["y"])+ float(c.config["y-offset"])).strip() + ","
+             + str(float(ntu_joint["z"]) * float(c.config["magnify"]["z"])
+                + float(c.config["z-offset"])).strip()+ ")\\\",")
+            except Exception as e:
+              ERROR.warn("Exception raised: " + str(e) + ": for joint: " + joint + " in frame: " + str(frame) + " for file: " + filename + " in dir: " + os.getcwd()) 
+              return
             out.write("\\\"q\\\":\\\"(0,0)\\\",")
             out.write("\\\"o\\\":\\\"(0,0,0,0)\\\"}")
             if joint != joint_order[len(joint_order) - 1]:

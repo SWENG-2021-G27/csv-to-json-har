@@ -5,6 +5,7 @@ from colors import *
 
 
 if __name__ == "__main__":
+ failed = [] 
  for dir in os.listdir('.'):
   if(os.path.isdir(dir) and dir != "__pycache__"):
     print(blue('#################'))
@@ -12,5 +13,12 @@ if __name__ == "__main__":
     print(blue('#################'))
     os.chdir(dir)
     convert_TestData.convert() 
-    unit_test.test()
+    status = unit_test.test()
+    if(status != None):
+      failed.append(status)
     os.chdir('..')
+ if (len(failed) > 0):
+  print("These folders failed the consistency check: " + red(str(failed)))
+ else:
+   print(bright(green("All folders passed the consistency check.")))
+

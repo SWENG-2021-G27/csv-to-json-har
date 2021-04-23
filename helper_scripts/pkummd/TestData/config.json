@@ -1,14 +1,12 @@
 {
   "Device": 3,
   "Ground": [0, 1, 0, 0.6],
-  "JointXYZAreConsecutive": false,
-  "JointXYZOrder" : ["z", "x", "y"],
   "magnify" : {
       "x" : 100,
       "y" : 100,
       "z" : 100
     },
-  "ColumnSeperator" : "Spaces",
+  "ColumnSeparator" : "Spaces",
   "Structure": "Vertical",
   "FileExtension": ".txt",
   "StartRow": 0,

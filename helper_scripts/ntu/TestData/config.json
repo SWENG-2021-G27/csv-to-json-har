@@ -7,7 +7,7 @@
       "y" : 100,
       "z" : 100
     },
-  "ColumnSeperator" : "Spaces",
+  "ColumnSeparator" : "Spaces",
   "Structure": "NTU",
   "StartRow": 0,
   "Frames": {
