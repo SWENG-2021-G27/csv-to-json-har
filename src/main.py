@@ -8,6 +8,8 @@ import pathlib
 import ntpath
 import re
 import colorama
+import ERROR
+import help
 
 # This makes the coloring cross platform
 colorama.init()
@@ -82,6 +84,14 @@ def parse_options():
     global options, extra_options
 
     nice_msg("Parsing the following arguments: " + str(command_line_arguments[1:]))
+
+    for h in ['-h', '--help']:
+      if h in command_line_arguments:
+        help.print_help()
+        idx = command_line_arguments.index(h)
+        command_line_arguments.pop(idx)
+        break
+        
     # If the --gui field is present in the command line arguments, open the GUI
     if "--gui" in command_line_arguments or '-g' in command_line_arguments:
         if len(command_line_arguments) > 2:
@@ -108,7 +118,7 @@ def parse_options():
             command_line_arguments.pop(idx)
             option_to_set = flags[opt]
             if options[option_to_set] is not None:
-                warn("The " + blue(option_to_set) + " is being overwritten.\n\t" +
+                ERROR.warn("The " + blue(option_to_set) + " is being overwritten.\n\t" +
                      blue(option_to_set) + " is now set to " + blue(value) + " (argument of " + blue(opt) + ")")
             options[option_to_set] = value
 
@@ -123,15 +133,15 @@ def parse_options():
     while idx < len(command_line_arguments):
         arg = command_line_arguments[idx]
         if re.match(single_char_switch, arg):
-            warn(arg + " is not a recognised switch and is being ignored")
+            ERROR.warn(arg + " is not a recognised switch and is being ignored")
             command_line_arguments.pop(idx)
         elif re.match(too_many_chars, arg):
-            warn(
+            ERROR.warn(
                 arg + " is not a recognised switch and is being ignored.\n\tNOTE: multi character switches begin with " +
                 "two dashes, e.g. --config, wheras single character switches begin with one dash, e.g -c")
             command_line_arguments.pop(idx)
         elif re.match(multi_char_switch, arg):
-            warn(arg + " is not a recognised switch and is being ignored.")
+            ERROR.warn(arg + " is not a recognised switch and is being ignored.")
             command_line_arguments.pop(idx)
         else:
             idx += 1
@@ -154,7 +164,7 @@ def parse_options():
         elif (os.path.isdir(options["input_path"])):
             input_parent = options["input_path"]
         elif (not os.path.exists(options["input_path"])):
-            error(options["input_path"] + " does not exist. Aborting.")
+            ERROR.error(options["input_path"] + " does not exist. Aborting.")
 
         default_options["config_file_path"] = os.path.join(input_parent, "config.json")
         default_options["output_folder"] = os.path.join(input_parent, "ConvertedJsonOutput")
@@ -162,14 +172,14 @@ def parse_options():
     # Use default_options for any options that are still None
     for opt in options.keys():
         if options[opt] is None:
-            warn("Using default " + opt + ": " + default_options[opt] + "\n\tUse " + blue(
+            ERROR.warn("Using default " + opt + ": " + default_options[opt] + "\n\tUse " + blue(
                 option_flag[opt] + " <" + opt + ">") + " to set the " + opt + " manually.")
             options[opt] = default_options[opt]
 
     if len(command_line_arguments) > 0:
         # Show command line arguments that weren't consumed.
         # The first argument should not have been consumed. It is the name of the program that was called.
-        warn("The following command line arguments were not matched in any pattern and were not loaded: ")
+        ERROR.warn("The following command line arguments were not matched in any pattern and were not loaded: ")
         print(command_line_arguments)
 
 def execute():
@@ -177,29 +187,29 @@ def execute():
     if os.path.isfile(options["input_path"]):
         extra_options["single_file"] = True
     elif not os.path.isdir(options["input_path"]):
-        error(blue(options["input_path"]) + " is neither a file nor a folder. Aborting.")
+        ERROR.error(blue(options["input_path"]) + " is neither a file nor a folder. Aborting.")
         sys.exit(-1)
 
     # Load configuration from config file
     try:
         x = configuration.Configuration(options["config_file_path"])
     except OSError as e:
-        error(str(e) + ": OSError raised while loading config from " + blue(options["config_file_path"]))
+        ERROR.error(str(e) + ": OSError raised while loading config from " + blue(options["config_file_path"]))
     except ValueError as e:
-        error(str(e) + ": ValueError raised while loading config from " + blue(options["config_file_path"]))
+        ERROR.error(str(e) + ": ValueError raised while loading config from " + blue(options["config_file_path"]))
     except Exception as e:
-        error(str(e) + ": An unknown error has occurred while loading config from " + blue(options["config_file_path"]))
+        ERROR.error(str(e) + ": An unknown error has occurred while loading config from " + blue(options["config_file_path"]))
 
     if os.path.isfile(options["output_folder"]):
-        error(blue(options["output_folder"]) + " is a file. " + blue("output_folder") + " (given by " +
+        ERROR.error(blue(options["output_folder"]) + " is a file. " + blue("output_folder") + " (given by " +
               blue("-o") + " or " + blue("--output") + " must be a folder.")
     if not os.path.exists(options["output_folder"]):
         try:
             os.makedirs(options["output_folder"])
         except OSError as e:
-            error(str(e) + " Failed to create output directory " + options["output_folder"])
+            ERROR.error(str(e) + " Failed to create output directory " + options["output_folder"])
         except Exception as e:
-            error(str(e) + " An unknown fatal error has occurred while trying to creat the output folder " + blue(
+            ERROR.error(str(e) + " An unknown fatal error has occurred while trying to creat the output folder " + blue(
                 options["output_folder"]))
 
     options["output_folder"] = os.path.abspath(options["output_folder"])
@@ -212,9 +222,9 @@ def execute():
       elif x.config["Structure"] == "NTU":
         converter.convert_ntu(options["input_path"], options["output_folder"], x)
       else:
-        error("No Structure provided in config.json. Possible Structure values are: \"Vertical\", \"NTU\"")
+        ERROR.error("No Structure provided in config.json. Possible Structure values are: \"Vertical\", \"NTU\"")
      except Exception as e:
-      error(str(e) + " Single File, Sorry, we don't have any more info.")
+      ERROR.error(str(e) + " Single File, Sorry, we don't have any more info.")
     
     else: # We assume
       # Convert all csv files in the input directory
@@ -223,15 +233,15 @@ def execute():
           os.chdir(options["input_path"])
           recursive_convert_vertical('.', options["output_folder"], x)
         except Exception as e:
-          error(str(e) + " Exception raised when trying to recursively convert (vertical) the folder " + options["input_path"])
+          ERROR.error(str(e) + " Exception raised when trying to recursively convert (vertical) the folder " + options["input_path"])
       elif x.config["Structure"] == "NTU":
         try:
           os.chdir(options["input_path"])
           recursive_convert_ntu('.', os.path.abspath(options["output_folder"]), x)
         except Exception as e:
-          error(str(e) + " Exception raised when trying to recursively convert (ntu) the folder " + options["input_path"])
+          ERROR.error(str(e) + " Exception raised when trying to recursively convert (ntu) the folder " + options["input_path"])
       else:
-        error("No Structure provided in config.json. Possible Structure values are: \"Vertical\", \"NTU\"")
+        ERROR.error("No Structure provided in config.json. Possible Structure values are: \"Vertical\", \"NTU\"")
 
 
 def recursive_convert_vertical(input, output, config):

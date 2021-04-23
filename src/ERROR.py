@@ -1,4 +1,5 @@
 import colorama
+import sys
 colorama.init()
 
 def warn(warning):
